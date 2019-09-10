@@ -47,9 +47,12 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "express": "^4.17.1",
+    "font-awesome": "^4.7.0",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "react-geolocated": "^3.0.1"
   },
   "husky": {
     "hooks": {
