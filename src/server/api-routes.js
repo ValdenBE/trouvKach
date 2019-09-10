@@ -8,7 +8,7 @@
 
 const router = require("express").Router();
 
-router.get("/hola", (req, res) => {
+router.get("/", (req, res) => {
     res.json({
         status: "API is working",
         message: "Welcome to TrouvKach",

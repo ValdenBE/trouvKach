@@ -8,37 +8,18 @@
 
 import express from "express";
 import path from "path";
-import apiRoutes from "./api-routes";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
+const MongoClient = require("mongodb").MongoClient;
+const assert = require("assert");
+const url = "mongodb://dev:dev@mongo:27017";
+const dbName = "trouvkash";
+const client = new MongoClient(url);
 
 const {APP_PORT} = process.env;
 
 const app = express();
+const router = require("express").Router();
 
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
-
-app.use("/api", apiRoutes);
-
-app.use(
-    bodyParser.urlencoded({
-        extended: true,
-    }),
-);
-
-app.use(bodyParser.json());
-
-mongoose.connect("mongodb://dev:dev@localhost/trouvkash", {
-    useNewUrlParser: true,
-});
-
-const db = mongoose.connection;
-
-if (!db) {
-    console.log("Error connecting db");
-} else {
-    console.log("Db connected successfully");
-}
 
 app.get("/hello", (req, res) => {
     console.log(`ℹ️  (${req.method.toUpperCase()}) ${req.url}`);
@@ -48,3 +29,35 @@ app.get("/hello", (req, res) => {
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
 );
+
+router.get("/", (req, res) => {
+    res.json({
+        status: "API is working NOWWWW",
+        message: "Welcome to TrouvKach",
+    });
+});
+
+app.get("/bank", (req, res) => {
+    client.connect(err => {
+        assert.equal(null, err);
+        if (err == null) {
+            console.log("connected Sucessfully <3");
+            const db = client.db(dbName);
+            const collection = db.collection("banks");
+            collection.find({}).toArray((err2, items) => {
+                if (err2 != null) {
+                    console.error(err2);
+                    client.close();
+                } else {
+                    const rep = {data: items};
+                    res.send(rep);
+                    client.close();
+                }
+            });
+        } else {
+            console.error(err);
+        }
+    });
+});
+
+//app.use("/api", router);
