@@ -1,9 +1,9 @@
 /* becodeorg/trouvkach
  *
- * /src/client/components/hello.js - Hello Component
+ * /src/client/components/map/map.js - Map Component
  *
- * coded by leny@BeCode
- * started at 06/09/2019
+ * coded by Flo
+ * started at 10/09/2019
  */
 
 import * as React from "react";
@@ -21,7 +21,6 @@ export default class MaMap extends React.Component {
     render() {
         const styleMap = {
             height: "500px",
-            width: "500px",
         };
         return (
             <Map center={this.userPosition} zoom={this.zoom} style={styleMap}>
@@ -32,9 +31,7 @@ export default class MaMap extends React.Component {
                     url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
                 />
                 <Marker position={this.userPosition}>
-                    <Popup>
-                        {"A pretty CSS3 popup.  Easily customizable."}
-                    </Popup>
+                    <Popup>{"You are here"}</Popup>
                 </Marker>
             </Map>
         );
