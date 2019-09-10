@@ -20,19 +20,29 @@ export default class App extends React.Component {
             userLng: null,
         };
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.mapError = this.mapError.bind(this);
+        this.alertMap =
+            "Your browser don't allow or doesn't support geolocation";
     }
 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition(location => {
-            this.setState({
-                userLat: location.coords.latitude,
-                userLng: location.coords.longitude,
-            });
-        });
+        navigator.geolocation.getCurrentPosition(
+            location => {
+                this.setState({
+                    userLat: location.coords.latitude,
+                    userLng: location.coords.longitude,
+                });
+            },
+            this.mapError,
+            10000,
+        );
+    }
+
+    mapError() {
+        console.log(this.alertMap);
     }
 
     render() {
-        console.log(location.coords.latitude);
         return (
             <MaMap
                 userLat={this.state.userLat}
