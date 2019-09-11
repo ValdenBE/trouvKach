@@ -26,9 +26,8 @@ export default class MainMap extends React.Component {
 
     getAtm() {
         axios.get("http://localhost/api/terminal").then(response => {
-            console.log(response.data);
             this.setState({
-                atm: [...this.state.atm, ...[response.data]],
+                atm: [...this.state.atm, ...Object.values(response.data)],
             });
         });
     }
@@ -49,9 +48,8 @@ export default class MainMap extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return "loading";
+            return "loading faché";
         }
-        console.log(this.state.atm);
         return (
             <div id={"mapContainer"}>
                 <MaMap
@@ -59,8 +57,7 @@ export default class MainMap extends React.Component {
                     userLng={this.state.userLng}
                     zoom={this.state.zoom}
                     className={"leaflet-container"}
-                    atmLng={this.state.atmLng}
-                    atmLat={this.state.atmLat}
+                    atm={this.state.atm}
                 />
             </div>
         );

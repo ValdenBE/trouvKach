@@ -8,7 +8,7 @@
 
 import * as React from "react";
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
-// import Markers from "./markers";
+import Markers from "./markers";
 
 export default class MaMap extends React.Component {
     constructor(props) {
@@ -17,24 +17,32 @@ export default class MaMap extends React.Component {
         this.userLng = this.props.userLng;
         this.zoom = this.props.zoom;
         this.userPosition = [this.userLat, this.userLng];
+        this.atm = this.props.atm;
     }
 
     render() {
         const styleMap = {
             height: "500px",
         };
+
         return (
-            <Map center={this.userPosition} zoom={this.zoom} style={styleMap}>
-                <TileLayer
-                    attribution={
-                        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    }
-                    url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
-                />
-                <Marker position={this.userPosition}>
-                    <Popup>{"You are here"}</Popup>
-                </Marker>
-            </Map>
+            <div>
+                <Map
+                    center={this.userPosition}
+                    zoom={this.zoom}
+                    style={styleMap}>
+                    <TileLayer
+                        attribution={
+                            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        }
+                        url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
+                    />
+                    <Marker position={this.userPosition}>
+                        <Popup>{"You are here"}</Popup>
+                    </Marker>
+                </Map>
+                <Markers atm={this.atm} />
+            </div>
         );
     }
 }
