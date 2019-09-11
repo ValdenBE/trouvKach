@@ -11,8 +11,6 @@ import ReactDOM from "react-dom";
 import Index from "./components/index/index";
 import List from "./components/list/list";
 
-import HelloWorld from "./components/hello";
-
 export default class Trouvkach extends Component {
     constructor(props) {
         super(props);
@@ -28,9 +26,11 @@ export default class Trouvkach extends Component {
     render() {
         return (
             <div>
-                <Index viewList={this.updateState.bind(this)} />
+                <Index
+                    viewListUpdate={this.updateState.bind(this)}
+                    viewList={this.state.viewList}
+                />
                 <List viewList={this.state.viewList} />
-                <HelloWorld />
             </div>
         );
     }
