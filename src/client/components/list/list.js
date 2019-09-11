@@ -7,23 +7,31 @@
  */
 
 import React, {Component} from "react";
-import Object from "./object";
+import Objects from "./object";
 import MainMap from "../map/main-map";
 import axios from "axios";
 
 export default class List extends Component {
     constructor(props) {
         super(props);
+        this.getAtmData();
         this.state = {
+            isLoading: false,
             atmData: [],
         };
     }
-    componentDidMount() {
+
+    getAtmData() {
         axios
             .get("http://localhost/api/terminal")
             .then(response => {
-                this.setState({atmData: response.data});
-                console.log(this.state.atmData);
+                this.setState({
+                    atmData: [
+                        ...this.state.atmData,
+                        ...Object.values(response.data),
+                    ],
+                });
+                this.setState({isLoading: false});
             })
             .catch(error => {
                 console.log(error);
@@ -38,14 +46,18 @@ export default class List extends Component {
                         <span>{"Bonjour, je suis la liste !"}</span>
                     </p>
                     <MainMap />
-                    <Object
-                        className={"mabite"}
-                        value={"test hihi haha"}
-                        handleObject={this.props.viewContentUpdate}
-                    />
+                    {this.state.atmData.map((element, index) => (
+                        <Objects
+                            key={index.toString()}
+                            className={"mabite"}
+                            value={`${element.address}`}
+                            handleObject={this.props.viewContentUpdate}
+                        />
+                    ))}
                 </div>
             );
         }
+
         return null;
     }
 }
