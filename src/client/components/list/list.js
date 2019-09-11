@@ -8,6 +8,7 @@
 
 import React, {Component} from "react";
 import Object from "./object";
+import MainMap from "../map/main-map";
 
 export default class List extends Component {
     render() {
@@ -17,6 +18,7 @@ export default class List extends Component {
                     <p>
                         <span>{"Bonjour, je suis la liste !"}</span>
                     </p>
+                    <MainMap />
                     <Object
                         className={"mabite"}
                         value={"test hihi haha"}
