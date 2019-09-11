@@ -8,10 +8,39 @@
 
 import express from "express";
 import path from "path";
-
+const url = "mongodb://mongo:27017/admin";
+const mongoose = require("mongoose");
 const {APP_PORT} = process.env;
-
 const app = express();
+const ObjectId = require("mongodb").ObjectID;
+mongoose.connect(url, {
+    user: "dev",
+    pass: "dev",
+    dbName: "trouvkash", // 'mydb' which is the default selected DB
+    useNewUrlParser: true,
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 500, // Reconnect every 500ms
+    poolSize: 10, // Maintain up to 10 socket connections
+});
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log(" <3 connected");
+});
+
+const bankSchema = new mongoose.Schema({
+    _id: ObjectId,
+    country: String,
+    color: String,
+    name: String,
+    icon: String,
+    url: String,
+    created_at: String,
+    updated_at: String,
+    deleted_at: String,
+});
+
+const bank = mongoose.model("bank", bankSchema);
 
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
@@ -76,8 +105,15 @@ app.get("/api/terminal", (req, res) => {
     });
 });
 
-/*app.get("/bank", (req, res) => {
-    client.connect(err => {
+app.get("/bank", (req, res) => {
+    bank.find((err, banks) => {
+        if (err) {
+            return console.error(err);
+        }
+        return res.send(banks);
+    });
+});
+/* client.connect(err => {
         assert.equal(null, err);
         if (err == null) {
             console.log("connected Sucessfully <3");
@@ -96,7 +132,6 @@ app.get("/api/terminal", (req, res) => {
         } else {
             console.error(err);
         }
-    });
-});*/
+    }); */
 
 //app.use("/api", router);
