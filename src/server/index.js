@@ -12,7 +12,7 @@ const dbconfig = require("./config/database.config");
 const mongoose = require("mongoose");
 const {APP_PORT} = process.env;
 const app = express();
-const ObjectId = require("mongodb").ObjectID;
+import router from "./api-routes";
 
 mongoose
     .connect(dbconfig.url, {
@@ -39,20 +39,6 @@ db.once("open", () => {
     console.log(" <3 connected");
 });
 
-const bankSchema = new mongoose.Schema({
-    _id: ObjectId,
-    country: String,
-    color: String,
-    name: String,
-    icon: String,
-    url: String,
-    created_at: String,
-    updated_at: String,
-    deleted_at: String,
-});
-
-const bank = mongoose.model("bank", bankSchema);
-
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
 app.get("/hello", (req, res) => {
@@ -64,6 +50,7 @@ app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
 );
 
+/*
 app.get("/api/bank", (req, res) => {
     res.json({
         0: {
@@ -123,8 +110,9 @@ app.get("/bank", (req, res) => {
         }
         return res.send(banks);
     });
-});
-/* client.connect(err => {
+}); 
+
+client.connect(err => {
         assert.equal(null, err);
         if (err == null) {
             console.log("connected Sucessfully <3");
@@ -143,6 +131,7 @@ app.get("/bank", (req, res) => {
         } else {
             console.error(err);
         }
-    }); */
+    });
+*/
 
-//app.use("/api", router);
+app.use("/api", router);
