@@ -8,7 +8,6 @@
 
 import * as React from "react";
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
-import Markers from "./markers";
 
 export default class MaMap extends React.Component {
     constructor(props) {
@@ -18,6 +17,14 @@ export default class MaMap extends React.Component {
         this.zoom = this.props.zoom;
         this.userPosition = [this.userLat, this.userLng];
         this.atm = this.props.atm;
+        this.state = {
+            atmPos: null,
+            loadingAtm: true,
+        };
+    }
+
+    componentDidMount() {
+        this.testMap();
     }
 
     render() {
@@ -26,23 +33,20 @@ export default class MaMap extends React.Component {
         };
 
         return (
-            <div>
-                <Map
-                    center={this.userPosition}
-                    zoom={this.zoom}
-                    style={styleMap}>
-                    <TileLayer
-                        attribution={
-                            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        }
-                        url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
-                    />
-                    <Marker position={this.userPosition}>
-                        <Popup>{"You are here"}</Popup>
-                    </Marker>
-                </Map>
-                <Markers atm={this.atm} />
-            </div>
+            <Map center={this.userPosition} zoom={this.zoom} style={styleMap}>
+                <TileLayer
+                    attribution={
+                        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    }
+                    url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
+                />
+                <Marker position={this.userPosition}>
+                    <Popup>{"You are here"}</Popup>
+                </Marker>
+                <Marker position={this.state.atmPos[0]}>
+                    <Popup>{"cacamour !"}</Popup>
+                </Marker>
+            </Map>
         );
     }
 }
