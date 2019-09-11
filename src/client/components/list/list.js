@@ -17,7 +17,11 @@ export default class List extends Component {
                     <p>
                         <span>{"Bonjour, je suis la liste !"}</span>
                     </p>
-                    <Object />
+                    <Object
+                        className={"mabite"}
+                        value={"test hihi haha"}
+                        handleObject={this.props.viewContentUpdate}
+                    />
                 </div>
             );
         }

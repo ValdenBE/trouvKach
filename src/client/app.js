@@ -10,17 +10,24 @@ import React, {Component} from "react";
 import ReactDOM from "react-dom";
 import Index from "./components/index/index";
 import List from "./components/list/list";
+import Display from "./components/display/display";
 
 export default class Trouvkach extends Component {
     constructor(props) {
         super(props);
         this.state = {
             viewList: false,
+            viewContent: false,
         };
     }
 
     updateState() {
         this.setState({viewList: true});
+    }
+    updateStateContent() {
+        this.setState(prevState => ({
+            viewContent: !prevState.viewContent,
+        }));
     }
 
     render() {
@@ -30,7 +37,11 @@ export default class Trouvkach extends Component {
                     viewListUpdate={this.updateState.bind(this)}
                     viewList={this.state.viewList}
                 />
-                <List viewList={this.state.viewList} />
+                <List
+                    viewList={this.state.viewList}
+                    viewContentUpdate={this.updateStateContent.bind(this)}
+                />
+                <Display viewContent={this.state.viewContent} />
             </div>
         );
     }
