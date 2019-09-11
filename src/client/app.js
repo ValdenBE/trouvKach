@@ -8,7 +8,6 @@
 
 import * as React from "react";
 import ReactDOM from "react-dom";
-// import Axios from "axios";
 import MainMap from "./components/map/main-map";
 
 export default class App extends React.Component {

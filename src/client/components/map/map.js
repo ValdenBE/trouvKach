@@ -8,6 +8,7 @@
 
 import * as React from "react";
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
+// import Markers from "./markers";
 
 export default class MaMap extends React.Component {
     constructor(props) {
