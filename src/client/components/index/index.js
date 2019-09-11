@@ -8,32 +8,29 @@
 
 import React, {Component} from "react";
 import Button from "../button";
-import Content from "./content";
-import MainList from "../list/main";
 
-export default class main extends Component {
+export default class Index extends Component {
     constructor(props) {
         super(props);
-        this.onStart = this.onStart.bind(this);
-        this.state = {
-            viewList: false,
-        };
+        this.maBite = this.maBite.bind(this);
     }
 
-    onStart() {
-        this.setState({viewList: true});
-    }
-    render() {
+    maBite() {
         return (
             <div>
-                <MainList view={this.state.viewList} />
-                <Content />
+                <p>
+                    <span>{"Bonjour, je suis l'index !"}</span>
+                </p>
                 <Button
-                    handleButton={this.onStart}
+                    handleButton={this.props.viewList}
                     value={"START"}
                     className={"index-btn"}
                 />
             </div>
         );
+    }
+
+    render() {
+        return !this.props.viewList ? this.maBite() : null;
     }
 }

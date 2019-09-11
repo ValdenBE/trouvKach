@@ -8,19 +8,16 @@
 
 import React, {Component} from "react";
 import Object from "./object";
-import Filter from "./filter";
 
-export default class main extends Component {
-    constructor(props) {
-        super(props);
-        this.view = this.props.viewList;
-    }
+export default class List extends Component {
     render() {
-        if (this.view) {
+        if (this.props.viewList) {
             return (
                 <div>
+                    <p>
+                        <span>{"Bonjour, je suis la liste !"}</span>
+                    </p>
                     <Object />
-                    <Filter />
                 </div>
             );
         }
