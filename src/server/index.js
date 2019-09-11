@@ -8,21 +8,32 @@
 
 import express from "express";
 import path from "path";
-const url = "mongodb://mongo:27017/admin";
+const dbconfig = require("./config/database.config");
 const mongoose = require("mongoose");
 const {APP_PORT} = process.env;
 const app = express();
 const ObjectId = require("mongodb").ObjectID;
-mongoose.connect(url, {
-    user: "dev",
-    pass: "dev",
-    dbName: "trouvkash", // 'mydb' which is the default selected DB
-    useNewUrlParser: true,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 500, // Reconnect every 500ms
-    poolSize: 10, // Maintain up to 10 socket connections
-});
+
+mongoose
+    .connect(dbconfig.url, {
+        user: "dev",
+        pass: "dev",
+        dbName: "trouvkash", // 'mydb' which is the default selected DB
+        useNewUrlParser: true,
+        reconnectTries: Number.MAX_VALUE,
+        reconnectInterval: 500, // Reconnect every 500ms
+        poolSize: 10, // Maintain up to 10 socket connections
+    })
+    .then(() => {
+        console.log("Successfully connected to the database");
+    })
+    .catch(err => {
+        console.error("Could not connect to the database. Exiting now...", err);
+        process.exit();
+    });
+
 const db = mongoose.connection;
+
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log(" <3 connected");
