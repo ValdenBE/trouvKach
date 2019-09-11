@@ -8,9 +8,7 @@
 
 import React, {Component} from "react";
 import Objects from "./object";
-import MainMap from "../map/main-map";
 import axios from "axios";
-
 export default class List extends Component {
     constructor(props) {
         super(props);
@@ -45,11 +43,11 @@ export default class List extends Component {
                     <p>
                         <span>{"Bonjour, je suis la liste !"}</span>
                     </p>
-                    <MainMap />
+
                     {this.state.atmData.map((element, index) => (
                         <Objects
                             key={index.toString()}
-                            className={"mabite"}
+                            className={"list-objects"}
                             value={`${element.address}`}
                             handleObject={this.props.viewContentUpdate}
                         />
