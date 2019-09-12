@@ -11,6 +11,7 @@ import ReactDOM from "react-dom";
 import Index from "./components/index/index";
 import List from "./components/index/list/list";
 import Display from "./components/index/list/display/display";
+import Grid from "@material-ui/core/Grid";
 
 export default class Trouvkach extends Component {
     constructor(props) {
@@ -33,15 +34,21 @@ export default class Trouvkach extends Component {
     render() {
         return (
             <div>
-                <Index
-                    handleViewListUpdate={this.updateState.bind(this)}
-                    viewList={this.state.viewList}
-                />
-                <List
-                    viewList={this.state.viewList}
-                    viewContentUpdate={this.updateStateContent.bind(this)}
-                />
-                <Display viewContent={this.state.viewContent} />
+                <Grid
+                    container
+                    direction={"column"}
+                    justify={"flex-start"}
+                    alignItems={"center"}>
+                    <Index
+                        handleViewListUpdate={this.updateState.bind(this)}
+                        viewList={this.state.viewList}
+                    />
+                    <List
+                        viewList={this.state.viewList}
+                        viewContentUpdate={this.updateStateContent.bind(this)}
+                    />
+                    <Display viewContent={this.state.viewContent} />
+                </Grid>
             </div>
         );
     }

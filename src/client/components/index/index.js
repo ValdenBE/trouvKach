@@ -9,6 +9,7 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -24,14 +25,20 @@ const Index = props => {
     if (!props.viewList) {
         return (
             <div>
-                <p>{"Bonjour, je suis l'index !"}</p>
-                <Button
-                    variant={"outlined"}
-                    color={"primary"}
-                    className={classes.button}
-                    onClick={props.handleViewListUpdate}>
-                    {"START"}
-                </Button>
+                <Grid
+                    container
+                    direction={"column"}
+                    justify={"flex-start"}
+                    alignItems={"center"}>
+                    <p>{"Bonjour, je suis l'index !"}</p>
+                    <Button
+                        variant={"outlined"}
+                        color={"primary"}
+                        className={classes.button}
+                        onClick={props.handleViewListUpdate}>
+                        {"START"}
+                    </Button>
+                </Grid>
             </div>
         );
     }

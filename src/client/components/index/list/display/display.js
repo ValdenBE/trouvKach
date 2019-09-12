@@ -14,10 +14,10 @@ export default class Display extends Component {
         if (this.props.viewContent) {
             return (
                 <div>
-                    <p>
+                    <div>
                         <span>{"Bonjour, je suis le display !"}</span>
                         <MainMap />
-                    </p>
+                    </div>
                 </div>
             );
         }
