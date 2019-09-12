@@ -40,6 +40,7 @@ export default class Trouvkach extends Component {
     error() {
         console.log("oups");
     }
+
     updateState() {
         this.setState({viewList: true});
     }
@@ -50,7 +51,7 @@ export default class Trouvkach extends Component {
     }
 
     getAtm() {
-        axios.get("http://localhost/api/term/50").then(response => {
+        axios.get("http://localhost/api/term/20").then(response => {
             this.setState(() => ({
                 atmArray: response.data.map(atm => atm),
                 loadingAtm: false,

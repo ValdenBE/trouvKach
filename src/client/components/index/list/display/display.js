@@ -10,14 +10,10 @@ import MainMap from "./map/main-map";
 /*import Content from "./content";*/
 
 export default class Display extends Component {
-    constructor(props) {
-        super(props);
-        this.atmArray = this.props.atmArray;
-        this.userLat = this.props.userLat;
-        this.userLng = this.props.userLng;
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
     render() {
-        console.log(this.props.atmArray);
         if (this.props.viewContent) {
             return (
                 <div>
@@ -25,8 +21,8 @@ export default class Display extends Component {
                         <span>{"Bonjour, je suis le display !"}</span>
                         <MainMap
                             atmArray={this.props.atmArray}
-                            userLat={this.userLat}
-                            userLng={this.userLng}
+                            userLat={this.props.userLat}
+                            userLng={this.props.userLng}
                         />
                     </div>
                 </div>

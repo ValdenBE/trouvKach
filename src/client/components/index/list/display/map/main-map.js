@@ -13,9 +13,6 @@ import MaMap from "./map";
 export default class MainMap extends React.Component {
     constructor(props) {
         super(props);
-        this.atmArray = this.props.atmArray;
-        this.userLat = this.props.userLat;
-        this.userLng = this.props.userLng;
         this.zoom = 17;
     }
 
@@ -23,8 +20,8 @@ export default class MainMap extends React.Component {
         return (
             <div id={"mapContainer"}>
                 <MaMap
-                    userLat={this.userLat}
-                    userLng={this.userLng}
+                    userLat={this.props.userLat}
+                    userLng={this.props.userLng}
                     zoom={this.zoom}
                     className={"leaflet-container"}
                     atmArray={this.props.atmArray}

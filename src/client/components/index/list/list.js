@@ -22,6 +22,7 @@ const List = props => {
                         className={"list-objects"}
                         value={`${element.address}`}
                         handleObject={props.viewContentUpdate}
+                        coords={element.position}
                     />
                 ))}
             </div>
