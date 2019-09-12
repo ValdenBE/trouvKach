@@ -9,7 +9,6 @@
 import * as React from "react";
 import MaMap from "./map";
 import axios from "axios";
-import "@babel/polyfill";
 
 export default class MainMap extends React.Component {
     constructor(props) {
