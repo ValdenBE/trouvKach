@@ -8,31 +8,15 @@
 
 import React from "react";
 import Objects from "./object";
-import axios from "axios";
 
 const List = props => {
-    const [atmData, setData] = React.useState([]);
-    // const classes = useStyles();
-
-    const getAtmData = () => {
-        axios
-            .get("http://localhost/api/term/10")
-            .then(response => {
-                setData(Object.values(response.data));
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
-
     if (props.viewList) {
-        getAtmData();
         return (
             <div>
                 <p>
                     <span>{"Bonjour, je suis la liste !"}</span>
                 </p>
-                {atmData.map((element, index) => (
+                {props.atmArray.map((element, index) => (
                     <Objects
                         key={index.toString()}
                         className={"list-objects"}

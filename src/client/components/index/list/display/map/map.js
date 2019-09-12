@@ -21,10 +21,6 @@ export default class MaMap extends React.Component {
         this.zoom = this.props.zoom;
         this.userPosition = [this.userLat, this.userLng];
         this.atmArray = this.props.atmArray;
-        this.state = {
-            atmPos: null,
-            loadingAtm: true,
-        };
         this.atmIcon = L.icon({
             iconUrl: atmImg,
             iconSize: [38, 38],
