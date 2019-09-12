@@ -22,6 +22,6 @@ router.get("/banks", banks.findAll);
 router.get("/terminals", terminals.findAll);
 router.get("/term/:nb", terminals.findQt);
 
-router.get("/term/update", terminals.updateAll);
+router.get("/update", terminals.updateAll);
 
 module.exports = router;
