@@ -8,10 +8,36 @@
 
 import express from "express";
 import path from "path";
-
+const dbconfig = require("./config/database.config");
+const mongoose = require("mongoose");
 const {APP_PORT} = process.env;
-
 const app = express();
+import router from "./api-routes";
+
+mongoose
+    .connect(dbconfig.url, {
+        user: "dev",
+        pass: "dev",
+        dbName: "trouvkash", // 'mydb' which is the default selected DB
+        useNewUrlParser: true,
+        reconnectTries: Number.MAX_VALUE,
+        reconnectInterval: 500, // Reconnect every 500ms
+        poolSize: 10, // Maintain up to 10 socket connections
+    })
+    .then(() => {
+        console.log("Successfully connected to the database");
+    })
+    .catch(err => {
+        console.error("Could not connect to the database. Exiting now...", err);
+        process.exit();
+    });
+
+const db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log(" <3 connected");
+});
 
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
@@ -24,6 +50,7 @@ app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
 );
 
+/*
 app.get("/api/bank", (req, res) => {
     res.json({
         0: {
@@ -76,8 +103,16 @@ app.get("/api/terminal", (req, res) => {
     });
 });
 
-/*app.get("/bank", (req, res) => {
-    client.connect(err => {
+app.get("/bank", (req, res) => {
+    bank.find((err, banks) => {
+        if (err) {
+            return console.error(err);
+        }
+        return res.send(banks);
+    });
+}); 
+
+client.connect(err => {
         assert.equal(null, err);
         if (err == null) {
             console.log("connected Sucessfully <3");
@@ -97,6 +132,6 @@ app.get("/api/terminal", (req, res) => {
             console.error(err);
         }
     });
-});*/
+*/
 
-//app.use("/api", router);
+app.use("/api", router);
