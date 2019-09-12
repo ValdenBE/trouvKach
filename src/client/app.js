@@ -11,6 +11,7 @@ import ReactDOM from "react-dom";
 import Index from "./components/index/index";
 import List from "./components/index/list/list";
 import Display from "./components/index/list/display/display";
+import axios from "axios";
 
 export default class Trouvkach extends Component {
     constructor(props) {
@@ -18,7 +19,19 @@ export default class Trouvkach extends Component {
         this.state = {
             viewList: false,
             viewContent: false,
+            atmArray: [],
+            loadingAtm: true,
         };
+        this.getApi();
+    }
+
+    getApi() {
+        axios.get("http://localhost/api/term/25").then(response => {
+            this.setState(() => ({
+                atmArray: response.data.map(atm => atm),
+                loadingAtm: false,
+            }));
+        });
     }
 
     updateState() {
@@ -31,6 +44,10 @@ export default class Trouvkach extends Component {
     }
 
     render() {
+        if (this.state.loadingAtm) {
+            return "LOADING";
+        }
+        console.log(this.state.atmArray);
         return (
             <div>
                 <Index
@@ -40,6 +57,7 @@ export default class Trouvkach extends Component {
                 <List
                     viewList={this.state.viewList}
                     viewContentUpdate={this.updateStateContent.bind(this)}
+                    atmArray={this.state.atmArray}
                 />
                 <Display viewContent={this.state.viewContent} />
             </div>
