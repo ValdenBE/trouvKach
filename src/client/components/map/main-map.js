@@ -8,6 +8,7 @@
 
 import * as React from "react";
 import MaMap from "./map";
+import axios from "axios";
 
 export default class MainMap extends React.Component {
     constructor(props) {
@@ -17,8 +18,19 @@ export default class MainMap extends React.Component {
             userLat: null,
             userLng: null,
             loading: true,
+            atmArray: [],
         };
         this.loadingMap();
+        this.getAtm();
+    }
+
+    getAtm() {
+        axios.get("http://localhost/api/term/50").then(response => {
+            this.setState(() => ({
+                atmArray: response.data.map(atm => atm),
+                loadingAtm: false,
+            }));
+        });
     }
 
     error() {
@@ -27,7 +39,6 @@ export default class MainMap extends React.Component {
 
     loadingMap() {
         navigator.geolocation.getCurrentPosition(location => {
-            console.log(location.coords);
             this.setState({
                 userLat: location.coords.latitude,
                 userLng: location.coords.longitude,
@@ -38,7 +49,7 @@ export default class MainMap extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return "loading";
+            return "MAIN LOADING";
         }
         return (
             <div id={"mapContainer"}>
@@ -47,6 +58,7 @@ export default class MainMap extends React.Component {
                     userLng={this.state.userLng}
                     zoom={this.state.zoom}
                     className={"leaflet-container"}
+                    atmArray={this.state.atmArray}
                 />
             </div>
         );

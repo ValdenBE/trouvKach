@@ -8,15 +8,29 @@
 
 import * as React from "react";
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
-// import Markers from "./markers";
+import L from "leaflet";
+import atmImg from "../../img/atm.png";
+import ForTestOnly from "./componentalacon";
 
 export default class MaMap extends React.Component {
     constructor(props) {
         super(props);
+        this.props = props;
         this.userLat = this.props.userLat;
         this.userLng = this.props.userLng;
         this.zoom = this.props.zoom;
         this.userPosition = [this.userLat, this.userLng];
+        this.atmArray = this.props.atmArray;
+        this.state = {
+            atmPos: null,
+            loadingAtm: true,
+        };
+        this.atmIcon = L.icon({
+            iconUrl: atmImg,
+            iconSize: [38, 38],
+            iconAnchor: [22, 92],
+            popupAnchor: [-3, -76],
+        });
     }
 
     render() {
@@ -34,7 +48,20 @@ export default class MaMap extends React.Component {
                 <Marker position={this.userPosition}>
                     <Popup>{"You are here"}</Popup>
                 </Marker>
+                {this.props.atmArray.map(el => (
+                    <Marker
+                        key={el._id}
+                        position={el.position}
+                        icon={this.atmIcon}>
+                        <Popup style={{textTransform: "uppercase"}}>
+                            <ForTestOnly />
+                        </Popup>
+                    </Marker>
+                ))}
             </Map>
         );
     }
 }
+// {
+//     // `id: ${el._id}`;
+// }

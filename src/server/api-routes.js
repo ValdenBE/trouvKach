@@ -8,11 +8,20 @@
 
 const router = require("express").Router();
 
+import banks from "./controllers/bank-controller";
+import terminals from "./controllers/terminal-controller";
+
 router.get("/", (req, res) => {
     res.json({
         status: "API is working",
         message: "Welcome to TrouvKach",
     });
 });
+
+router.get("/banks", banks.findAll);
+router.get("/terminals", terminals.findAll);
+router.get("/term/:nb", terminals.findQt);
+
+router.get("/update", terminals.updateAll);
 
 module.exports = router;
