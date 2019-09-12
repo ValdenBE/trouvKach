@@ -6,25 +6,36 @@
  * started at 10/09/2019
  */
 
-import React, {Component} from "react";
-import Button from "../button";
+import React from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
-export default class Index extends Component {
-    render() {
-        if (!this.props.viewList) {
-            return (
-                <div>
-                    <p>
-                        <span>{"Bonjour, je suis l'index !"}</span>
-                    </p>
-                    <Button
-                        handleButton={this.props.viewListUpdate}
-                        value={"START"}
-                        className={"index-btn"}
-                    />
-                </div>
-            );
-        }
-        return null;
+const useStyles = makeStyles(theme => ({
+    button: {
+        margin: theme.spacing(1),
+    },
+    input: {
+        display: "none",
+    },
+}));
+
+const Index = props => {
+    const classes = useStyles();
+    if (!props.viewList) {
+        return (
+            <div>
+                <p>{"Bonjour, je suis l'index !"}</p>
+                <Button
+                    variant={"outlined"}
+                    color={"primary"}
+                    className={classes.button}
+                    onClick={props.handleViewListUpdate}>
+                    {"Default"}
+                </Button>
+            </div>
+        );
     }
-}
+    return null;
+};
+
+export default Index;

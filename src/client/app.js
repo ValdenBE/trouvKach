@@ -34,7 +34,7 @@ export default class Trouvkach extends Component {
         return (
             <div>
                 <Index
-                    viewListUpdate={this.updateState.bind(this)}
+                    handleViewListUpdate={this.updateState.bind(this)}
                     viewList={this.state.viewList}
                 />
                 <List

@@ -6,56 +6,44 @@
  * started at 10/09/2019
  */
 
-import React, {Component} from "react";
+import React from "react";
 import Objects from "./object";
 import axios from "axios";
-export default class List extends Component {
-    constructor(props) {
-        super(props);
-        this.getAtmData();
-        this.state = {
-            isLoading: false,
-            atmData: [],
-        };
-    }
 
-    getAtmData() {
+const List = props => {
+    const [atmData, setData] = React.useState([]);
+    // const classes = useStyles();
+
+    const getAtmData = () => {
         axios
             .get("http://localhost/api/terminal")
             .then(response => {
-                this.setState({
-                    atmData: [
-                        ...this.state.atmData,
-                        ...Object.values(response.data),
-                    ],
-                });
-                this.setState({isLoading: false});
+                setData(Object.values(response.data));
             })
             .catch(error => {
                 console.log(error);
             });
+    };
+
+    if (props.viewList) {
+        getAtmData();
+        return (
+            <div>
+                <p>
+                    <span>{"Bonjour, je suis la liste !"}</span>
+                </p>
+                {atmData.map((element, index) => (
+                    <Objects
+                        key={index.toString()}
+                        className={"list-objects"}
+                        value={`${element.address}`}
+                        handleObject={props.viewContentUpdate}
+                    />
+                ))}
+            </div>
+        );
     }
+    return null;
+};
 
-    render() {
-        if (this.props.viewList) {
-            return (
-                <div>
-                    <p>
-                        <span>{"Bonjour, je suis la liste !"}</span>
-                    </p>
-
-                    {this.state.atmData.map((element, index) => (
-                        <Objects
-                            key={index.toString()}
-                            className={"list-objects"}
-                            value={`${element.address}`}
-                            handleObject={this.props.viewContentUpdate}
-                        />
-                    ))}
-                </div>
-            );
-        }
-
-        return null;
-    }
-}
+export default List;
