@@ -8,45 +8,61 @@
 
 import * as React from "react";
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
+import L from "leaflet";
+import atmImg from "../../img/atm.png";
 
 export default class MaMap extends React.Component {
     constructor(props) {
         super(props);
+        this.props = props;
         this.userLat = this.props.userLat;
         this.userLng = this.props.userLng;
         this.zoom = this.props.zoom;
         this.userPosition = [this.userLat, this.userLng];
-        this.atm = this.props.atm;
+        this.atmArray = this.props.atmArray;
         this.state = {
             atmPos: null,
             loadingAtm: true,
         };
-    }
-
-    componentDidMount() {
-        this.testMap();
+        this.atmIcon = L.icon({
+            iconUrl: atmImg,
+            iconSize: [38, 38],
+            iconAnchor: [22, 22],
+            popupAnchor: [-3, -76],
+        });
     }
 
     render() {
         const styleMap = {
             height: "500px",
         };
-
+        console.log(this.props.atmArray);
         return (
-            <Map center={this.userPosition} zoom={this.zoom} style={styleMap}>
-                <TileLayer
-                    attribution={
-                        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    }
-                    url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
-                />
-                <Marker position={this.userPosition}>
-                    <Popup>{"You are here"}</Popup>
-                </Marker>
-                <Marker position={this.state.atmPos[0]}>
-                    <Popup>{"cacamour !"}</Popup>
-                </Marker>
-            </Map>
+            <div>
+                <Map
+                    center={this.userPosition}
+                    zoom={this.zoom}
+                    style={styleMap}>
+                    <TileLayer
+                        attribution={
+                            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        }
+                        url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
+                    />
+                    <Marker position={this.userPosition}>
+                        <Popup>{"You are here"}</Popup>
+                    </Marker>
+                    {this.props.atmArray.map(el => (
+                        <Marker
+                            key={el._id}
+                            position={el.position}
+                            icon={this.atmIcon}>
+                            <Popup>{`id: ${el._id}`}</Popup>
+                        </Marker>
+                    ))}
+                </Map>
+                <img src={this.img} />
+            </div>
         );
     }
 }

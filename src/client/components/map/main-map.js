@@ -9,6 +9,7 @@
 import * as React from "react";
 import MaMap from "./map";
 import axios from "axios";
+import "@babel/polyfill";
 
 export default class MainMap extends React.Component {
     constructor(props) {
@@ -18,17 +19,18 @@ export default class MainMap extends React.Component {
             userLat: null,
             userLng: null,
             loading: true,
-            atm: [],
+            atmArray: [],
         };
         this.loadingMap();
         this.getAtm();
     }
 
     getAtm() {
-        axios.get("http://localhost/api/terminal").then(response => {
-            this.setState({
-                atm: [...this.state.atm, ...Object.values(response.data)],
-            });
+        axios.get("http://localhost/api/term/50").then(response => {
+            this.setState(() => ({
+                atmArray: response.data.map(atm => atm),
+                loadingAtm: false,
+            }));
         });
     }
 
@@ -48,7 +50,7 @@ export default class MainMap extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return "loading faché";
+            return "MAIN LOADING";
         }
         return (
             <div id={"mapContainer"}>
@@ -57,7 +59,7 @@ export default class MainMap extends React.Component {
                     userLng={this.state.userLng}
                     zoom={this.state.zoom}
                     className={"leaflet-container"}
-                    atm={this.state.atm}
+                    atmArray={this.state.atmArray}
                 />
             </div>
         );

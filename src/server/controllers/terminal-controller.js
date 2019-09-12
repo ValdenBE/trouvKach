@@ -41,6 +41,8 @@ exports.updateAll = async () => {
                     position: [document.latitude, document.longitude],
                 },
             })
-            .exec();
+            .exec(() => {
+                console.log("update OK");
+            });
     });
 };
