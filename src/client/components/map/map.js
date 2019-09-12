@@ -28,7 +28,7 @@ export default class MaMap extends React.Component {
         this.atmIcon = L.icon({
             iconUrl: atmImg,
             iconSize: [38, 38],
-            iconAnchor: [22, 22],
+            iconAnchor: [22, 92],
             popupAnchor: [-3, -76],
         });
     }
@@ -37,35 +37,28 @@ export default class MaMap extends React.Component {
         const styleMap = {
             height: "500px",
         };
-        console.log(this.props.atmArray);
         return (
-            <div>
-                <Map
-                    center={this.userPosition}
-                    zoom={this.zoom}
-                    style={styleMap}>
-                    <TileLayer
-                        attribution={
-                            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        }
-                        url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
-                    />
-                    <Marker position={this.userPosition}>
-                        <Popup>{"You are here"}</Popup>
+            <Map center={this.userPosition} zoom={this.zoom} style={styleMap}>
+                <TileLayer
+                    attribution={
+                        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    }
+                    url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
+                />
+                <Marker position={this.userPosition}>
+                    <Popup>{"You are here"}</Popup>
+                </Marker>
+                {this.props.atmArray.map(el => (
+                    <Marker
+                        key={el._id}
+                        position={el.position}
+                        icon={this.atmIcon}>
+                        <Popup style={{textTransform: "uppercase"}}>
+                            <ForTestOnly />
+                        </Popup>
                     </Marker>
-                    {this.props.atmArray.map(el => (
-                        <Marker
-                            key={el._id}
-                            position={el.position}
-                            icon={this.atmIcon}>
-                            <Popup>
-                                <ForTestOnly />
-                            </Popup>
-                        </Marker>
-                    ))}
-                </Map>
-                <img src={this.img} />
-            </div>
+                ))}
+            </Map>
         );
     }
 }

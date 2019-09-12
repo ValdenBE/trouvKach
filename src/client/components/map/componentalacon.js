@@ -10,6 +10,6 @@ import * as React from "react";
 
 export default class ForTestOnly extends React.Component {
     render() {
-        return <div>{"CACA PROUT"}</div>;
+        return <div>{"caca"}</div>;
     }
 }
