@@ -9,8 +9,8 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
 import Index from "./components/index/index";
-import List from "./components/list/list";
-import Display from "./components/display/display";
+import List from "./components/index/list/list";
+import Display from "./components/index/list/display/display";
 
 export default class Trouvkach extends Component {
     constructor(props) {

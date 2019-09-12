@@ -9,7 +9,7 @@
 import * as React from "react";
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
 import L from "leaflet";
-import atmImg from "../../img/atm.png";
+import atmImg from "./img/atm.png";
 import ForTestOnly from "./componentalacon";
 
 export default class MaMap extends React.Component {

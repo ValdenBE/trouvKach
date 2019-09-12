@@ -30,7 +30,7 @@ const Index = props => {
                     color={"primary"}
                     className={classes.button}
                     onClick={props.handleViewListUpdate}>
-                    {"Default"}
+                    {"START"}
                 </Button>
             </div>
         );

@@ -6,7 +6,7 @@
  * started at 10/09/2019
  */
 import React, {Component} from "react";
-import MainMap from "../map/main-map";
+import MainMap from "./map/main-map";
 /*import Content from "./content";*/
 
 export default class Display extends Component {

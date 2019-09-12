@@ -16,7 +16,7 @@ const List = props => {
 
     const getAtmData = () => {
         axios
-            .get("http://localhost/api/terminal")
+            .get("http://localhost/api/term/10")
             .then(response => {
                 setData(Object.values(response.data));
             })
