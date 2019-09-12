@@ -20,20 +20,26 @@ export default class Trouvkach extends Component {
             viewList: false,
             viewContent: false,
             atmArray: [],
-            loadingAtm: true,
+            loading: true,
+            userLat: null,
+            userLng: null,
         };
-        this.getApi();
+        this.getUserCoords();
+        this.getAtm();
+    }
+    getUserCoords() {
+        navigator.geolocation.getCurrentPosition(location => {
+            this.setState({
+                userLat: location.coords.latitude,
+                userLng: location.coords.longitude,
+                loading: false,
+            });
+        }, this.error);
     }
 
-    getApi() {
-        axios.get("http://localhost/api/term/25").then(response => {
-            this.setState(() => ({
-                atmArray: response.data.map(atm => atm),
-                loadingAtm: false,
-            }));
-        });
+    error() {
+        console.log("oups");
     }
-
     updateState() {
         this.setState({viewList: true});
     }
@@ -43,26 +49,39 @@ export default class Trouvkach extends Component {
         }));
     }
 
+    getAtm() {
+        axios.get("http://localhost/api/term/50").then(response => {
+            this.setState(() => ({
+                atmArray: response.data.map(atm => atm),
+                loadingAtm: false,
+            }));
+        });
+    }
+
     render() {
-        if (this.state.loadingAtm) {
-            return "LOADING";
+        if (this.state.loading) {
+            return "SEARCHING FOR YOUR POSITION";
         }
-        console.log(this.state.atmArray);
         return (
             <div>
                 <Index
                     handleViewListUpdate={this.updateState.bind(this)}
                     viewList={this.state.viewList}
+                    atmArray={this.state.atmArray}
                 />
                 <List
                     viewList={this.state.viewList}
                     viewContentUpdate={this.updateStateContent.bind(this)}
                     atmArray={this.state.atmArray}
                 />
-                <Display viewContent={this.state.viewContent} />
+                <Display
+                    viewContent={this.state.viewContent}
+                    atmArray={this.state.atmArray}
+                    userLat={this.state.userLat}
+                    userLng={this.state.userLng}
+                />
             </div>
         );
     }
 }
-const App = document.querySelector("#app");
-ReactDOM.render(<Trouvkach name={""} />, App);
+ReactDOM.render(<Trouvkach />, document.querySelector("#app"));
