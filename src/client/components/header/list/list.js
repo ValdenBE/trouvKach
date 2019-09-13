@@ -50,10 +50,10 @@ const useStyles = makeStyles(theme => ({
     addressText: {
         span: {fontSize: "0.5rem"},
     },
-    infos: {
-        justifyContent: "space-around",
-        display: "flex",
-    },
+    // infos: {
+    //     justifyContent: "space-around",
+    //     display: "flex",
+    // },
     alert: {
         padding: theme.spacing(1),
         margin: theme.spacing(1, 0),
@@ -138,18 +138,15 @@ function ResponsiveDrawer(props) {
                     <span className={classes.infos}>
                         {show ? (
                             <Portal container={containerPortal.current}>
-                                <Typography>
-                                    {"But I actually render here!"}
-                                </Typography>
+                                <MainMap
+                                    atmArray={props.atmArray}
+                                    userLat={props.userLat}
+                                    userLng={props.userLng}
+                                />
                             </Portal>
                         ) : null}
                     </span>
                 </Typography>
-                <MainMap
-                    atmArray={props.atmArray}
-                    userLat={props.userLat}
-                    userLng={props.userLng}
-                />
             </main>
         </div>
     );
