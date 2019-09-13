@@ -8,8 +8,8 @@
 
 import express from "express";
 import path from "path";
-const dbconfig = require("./config/database.config");
-const mongoose = require("mongoose");
+import dbconfig from "./config/database.config";
+import mongoose from "mongoose";
 const {APP_PORT} = process.env;
 const app = express();
 import router from "./api-routes";

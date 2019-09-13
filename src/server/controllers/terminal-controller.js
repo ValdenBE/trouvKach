@@ -67,7 +67,7 @@ exports.updateAll = async () => {
                 },
             })
             .exec(() => {
-                console.log("OK ! ");
+                console.log("update OK");
             });
     });
 };
