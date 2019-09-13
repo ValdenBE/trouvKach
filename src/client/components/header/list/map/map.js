@@ -15,7 +15,6 @@ import ForTestOnly from "./componentalacon";
 export default class MaMap extends React.Component {
     constructor(props) {
         super(props);
-        this.props = props;
         this.userLat = this.props.userLat;
         this.userLng = this.props.userLng;
         this.zoom = this.props.zoom;
@@ -34,7 +33,10 @@ export default class MaMap extends React.Component {
             height: "500px",
         };
         return (
-            <Map center={this.userPosition} zoom={this.zoom} style={styleMap}>
+            <Map
+                center={[this.props.userLat, this.props.userLng]}
+                zoom={this.zoom}
+                style={styleMap}>
                 <TileLayer
                     attribution={
                         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

@@ -8,17 +8,14 @@
 
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
-import Index from "./components/index/index";
-import List from "./components/index/list/list";
-import Display from "./components/index/list/display/display";
+import Header from "./components/header/header";
+import List from "./components/header/list/list";
 import axios from "axios";
 
 export default class Trouvkach extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            viewList: false,
-            viewContent: false,
             atmArray: [],
             loading: true,
             userLat: null,
@@ -41,9 +38,6 @@ export default class Trouvkach extends Component {
         console.log("oups");
     }
 
-    updateState() {
-        this.setState({viewList: true});
-    }
     updateStateContent() {
         this.setState(prevState => ({
             viewContent: !prevState.viewContent,
@@ -65,18 +59,9 @@ export default class Trouvkach extends Component {
         }
         return (
             <div>
-                <Index
-                    handleViewListUpdate={this.updateState.bind(this)}
-                    viewList={this.state.viewList}
-                    atmArray={this.state.atmArray}
-                />
+                <Header atmArray={this.state.atmArray} />
                 <List
-                    viewList={this.state.viewList}
                     viewContentUpdate={this.updateStateContent.bind(this)}
-                    atmArray={this.state.atmArray}
-                />
-                <Display
-                    viewContent={this.state.viewContent}
                     atmArray={this.state.atmArray}
                     userLat={this.state.userLat}
                     userLng={this.state.userLng}

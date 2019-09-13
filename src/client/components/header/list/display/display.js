@@ -19,11 +19,7 @@ export default class Display extends Component {
                 <div>
                     <div>
                         <span>{"Bonjour, je suis le display !"}</span>
-                        <MainMap
-                            atmArray={this.props.atmArray}
-                            userLat={this.props.userLat}
-                            userLng={this.props.userLng}
-                        />
+                        <MainMap />
                     </div>
                 </div>
             );
