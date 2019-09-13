@@ -11,6 +11,8 @@ import {makeStyles, useTheme} from "@material-ui/core/styles";
 import MainMap from "./display/map/main-map";
 import Typography from "@material-ui/core/Typography";
 
+import Portal from "@material-ui/core/Portal";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -52,6 +54,12 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "space-around",
         display: "flex",
     },
+    alert: {
+        padding: theme.spacing(1),
+        margin: theme.spacing(1, 0),
+        border: "1px solid",
+        borderColor: theme.palette.text.primary,
+    },
 }));
 
 function ResponsiveDrawer(props) {
@@ -59,6 +67,12 @@ function ResponsiveDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [show, setShow] = React.useState(false);
+    const containerPortal = React.useRef(null);
+
+    function handleClick() {
+        setShow(!show);
+    }
 
     function handleDrawerToggle() {
         setMobileOpen(!mobileOpen);
@@ -71,6 +85,7 @@ function ResponsiveDrawer(props) {
                 {props.atmArray.map(element => (
                     <ListItem
                         button
+                        onClick={handleClick}
                         key={element._id}
                         coords={element.position}>
                         <Divider />
@@ -120,17 +135,21 @@ function ResponsiveDrawer(props) {
             </nav>
             <main className={classes.content}>
                 <Typography paragraph>
-                    <p>
-                        <span className={classes.infos}>
-                            {"Je suis l'endroit ou les infos s'afficheront"}
-                        </span>
-                    </p>
-                    <MainMap
-                        atmArray={props.atmArray}
-                        userLat={props.userLat}
-                        userLng={props.userLng}
-                    />
+                    <span className={classes.infos}>
+                        {show ? (
+                            <Portal container={containerPortal.current}>
+                                <Typography>
+                                    {"But I actually render here!"}
+                                </Typography>
+                            </Portal>
+                        ) : null}
+                    </span>
                 </Typography>
+                <MainMap
+                    atmArray={props.atmArray}
+                    userLat={props.userLat}
+                    userLng={props.userLng}
+                />
             </main>
         </div>
     );

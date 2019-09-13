@@ -15,10 +15,8 @@ import ForTestOnly from "./componentalacon";
 export default class MaMap extends React.Component {
     constructor(props) {
         super(props);
-        this.userLat = this.props.userLat;
-        this.userLng = this.props.userLng;
         this.zoom = this.props.zoom;
-        this.userPosition = [this.userLat, this.userLng];
+        this.userPosition = [this.props.userLat, this.props.userLng];
         this.atmArray = this.props.atmArray;
         this.atmIcon = L.icon({
             iconUrl: atmImg,
