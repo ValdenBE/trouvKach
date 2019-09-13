@@ -15,12 +15,6 @@ import ForTestOnly from "./componentalacon";
 export default class MaMap extends React.Component {
     constructor(props) {
         super(props);
-        this.props = props;
-        this.userLat = this.props.userLat;
-        this.userLng = this.props.userLng;
-        this.zoom = this.props.zoom;
-        this.userPosition = [this.userLat, this.userLng];
-        this.atmArray = this.props.atmArray;
         this.atmIcon = L.icon({
             iconUrl: atmImg,
             iconSize: [38, 38],
@@ -34,14 +28,17 @@ export default class MaMap extends React.Component {
             height: "500px",
         };
         return (
-            <Map center={this.userPosition} zoom={this.zoom} style={styleMap}>
+            <Map
+                center={[this.props.userLat, this.props.userLng]}
+                zoom={this.props.zoom}
+                style={styleMap}>
                 <TileLayer
                     attribution={
                         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     }
                     url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
                 />
-                <Marker position={this.userPosition}>
+                <Marker position={[this.props.userLat, this.props.userLng]}>
                     <Popup>{"You are here"}</Popup>
                 </Marker>
                 {this.props.atmArray.map(el => (

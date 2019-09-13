@@ -16,9 +16,9 @@ const List = props => {
                 <p>
                     <span>{"Bonjour, je suis la liste !"}</span>
                 </p>
-                {props.atmArray.map((element, index) => (
+                {props.atmArray.map(element => (
                     <Objects
-                        key={index.toString()}
+                        key={element._id}
                         className={"list-objects"}
                         value={`${element.address}`}
                         handleObject={props.viewContentUpdate}
