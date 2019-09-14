@@ -22,8 +22,8 @@ export default class Trouvkach extends Component {
             userLng: null,
         };
         this.getUserCoords();
-        this.getAtm();
     }
+
     getUserCoords() {
         navigator.geolocation.getCurrentPosition(location => {
             this.setState({
@@ -31,6 +31,7 @@ export default class Trouvkach extends Component {
                 userLng: location.coords.longitude,
                 loading: false,
             });
+            this.getAtm();
         }, this.error);
     }
 
@@ -45,12 +46,16 @@ export default class Trouvkach extends Component {
     }
 
     getAtm() {
-        axios.get("http://localhost/api/term/20").then(response => {
-            this.setState(() => ({
-                atmArray: response.data.map(atm => atm),
-                loadingAtm: false,
-            }));
-        });
+        axios
+            .get(
+                `http://localhost/api/terminal/${this.state.userLat}/${this.state.userLng}/1`,
+            )
+            .then(response => {
+                this.setState(() => ({
+                    atmArray: response.data.map(atm => atm),
+                    loadingAtm: false,
+                }));
+            });
     }
 
     render() {
