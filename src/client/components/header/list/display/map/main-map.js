@@ -9,7 +9,11 @@
 import * as React from "react";
 import MaMap from "./map";
 // import axios from "axios";
-
+const mapStyle = {
+    marginLeft: "390px",
+    marginRight: "40px",
+    marginTop: "-30px",
+};
 export default class MainMap extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +22,7 @@ export default class MainMap extends React.Component {
 
     render() {
         return (
-            <div id={"mapContainer"}>
+            <div id={"mapContainer"} style={mapStyle}>
                 <MaMap
                     userLat={this.props.userLat}
                     userLng={this.props.userLng}
