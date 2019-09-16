@@ -8,10 +8,10 @@
 
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
-import Header from "./components/header/header";
-import List from "./components/header/list/list";
+import Header from "./components/header";
+import MainPage from "./components/main-page";
 import axios from "axios";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 export default class Trouvkach extends Component {
     constructor(props) {
         super(props);
@@ -60,12 +60,12 @@ export default class Trouvkach extends Component {
 
     render() {
         if (this.state.loading) {
-            return "SEARCHING FOR YOUR POSITION";
+            return <CircularProgress disableShrink />;
         }
         return (
             <div>
                 <Header atmArray={this.state.atmArray} />
-                <List
+                <MainPage
                     viewContentUpdate={this.updateStateContent.bind(this)}
                     atmArray={this.state.atmArray}
                     userLat={this.state.userLat}
