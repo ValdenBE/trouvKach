@@ -5,13 +5,17 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+//import ListItem from "@material-ui/core/ListItem";
+//import ListItemText from "@material-ui/core/ListItemText";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
-import MainMap from "./display/map/main-map";
+import MainMap from "./map/main-map";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 import Portal from "@material-ui/core/Portal";
+
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 
 const drawerWidth = 240;
 
@@ -41,14 +45,13 @@ const useStyles = makeStyles(theme => ({
     drawerPaper: {
         marginTop: "64px",
         width: "350px",
+        background: "transparent",
+        border: "none",
     },
     content: {
         flexGrow: 1,
         padding: theme.spacing(4),
         paddingTop: "88px",
-    },
-    addressText: {
-        span: {fontSize: "0.5rem"},
     },
     // infos: {
     //     justifyContent: "space-around",
@@ -60,6 +63,23 @@ const useStyles = makeStyles(theme => ({
         border: "1px solid",
         borderColor: theme.palette.text.primary,
     },
+    card: {
+        minWidth: 275,
+    },
+    bullet: {
+        display: "inline-block",
+        margin: "0 2px",
+        transform: "scale(0.8)",
+    },
+    title: {
+        fontSize: 14,
+    },
+    address: {
+        fontSize: 14,
+    },
+    pos: {
+        marginBottom: 12,
+    },
 }));
 
 function ResponsiveDrawer(props) {
@@ -67,12 +87,7 @@ function ResponsiveDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [show, setShow] = React.useState(false);
     const containerPortal = React.useRef(null);
-
-    function handleClick() {
-        setShow(!show);
-    }
 
     function handleDrawerToggle() {
         setMobileOpen(!mobileOpen);
@@ -83,18 +98,29 @@ function ResponsiveDrawer(props) {
             <Divider />
             <List className={classes.addresslist}>
                 {props.atmArray.map(element => (
-                    <ListItem
-                        button
-                        onClick={handleClick}
+                    <Button
                         key={element._id}
-                        coords={element.position}>
-                        <Divider />
-                        <ListItemText className={classes.addressText}>
-                            {element.address}
-                            <Divider />
-                        </ListItemText>
-                        <Divider />
-                    </ListItem>
+                        coords={element.position}
+                        variant={"outlined"}
+                        size={"large"}
+                        color={"primary"}
+                        className={classes.addressText}>
+                        <Card className={classes.card}>
+                            <CardContent>
+                                <Typography
+                                    className={classes.title}
+                                    color={"textSecondary"}
+                                    gutterBottom>
+                                    {"Belfius"}
+                                </Typography>
+                                <Typography
+                                    className={classes.address}
+                                    component={"h2"}>
+                                    {element.address}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Button>
                 ))}
             </List>
         </div>
@@ -136,15 +162,13 @@ function ResponsiveDrawer(props) {
             <main className={classes.content}>
                 <Typography paragraph>
                     <span className={classes.infos}>
-                        {show ? (
-                            <Portal container={containerPortal.current}>
-                                <MainMap
-                                    atmArray={props.atmArray}
-                                    userLat={props.userLat}
-                                    userLng={props.userLng}
-                                />
-                            </Portal>
-                        ) : null}
+                        <Portal container={containerPortal.current}>
+                            <MainMap
+                                atmArray={props.atmArray}
+                                userLat={props.userLat}
+                                userLng={props.userLng}
+                            />
+                        </Portal>
                     </span>
                 </Typography>
             </main>

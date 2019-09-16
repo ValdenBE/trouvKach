@@ -20,7 +20,16 @@ const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
     },
+
+    header: {
+        backgroundColor: "#16324F",
+    },
+    button: {
+        backgroundColor: "#2A628F",
+    },
     title: {
+        fontFamily: "Pacifico , cursive",
+        fontSize: "40px",
         flexGrow: 1,
         display: "none",
         [theme.breakpoints.up("sm")]: {
@@ -86,13 +95,14 @@ export default function SearchAppBar() {
 
     return (
         <div className={classes.root}>
-            <AppBar position={"fixed"}>
+            <AppBar className={classes.header} position={"fixed"}>
                 <Toolbar>
                     <Typography className={classes.title} variant={"h6"} noWrap>
                         {"Trouvkach"}
                     </Typography>
                     <div>
                         <Button
+                            className={classes.button}
                             aria-controls={"customized-menu"}
                             aria-haspopup={"true"}
                             variant={"contained"}

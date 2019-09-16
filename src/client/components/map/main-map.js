@@ -12,12 +12,12 @@ import MaMap from "./map";
 const mapStyle = {
     marginLeft: "390px",
     marginRight: "40px",
-    marginTop: "-30px",
+    marginTop: "-62px",
 };
 export default class MainMap extends React.Component {
     constructor(props) {
         super(props);
-        this.zoom = 17;
+        this.zoom = 15;
     }
 
     render() {
