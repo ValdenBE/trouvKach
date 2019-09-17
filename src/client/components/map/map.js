@@ -10,7 +10,7 @@ import * as React from "react";
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
 import L from "leaflet";
 import atmImg from "./img/atm.png";
-import ForTestOnly from "./componentalacon";
+import TxtPop from "./txt-pop";
 
 export default class MaMap extends React.Component {
     constructor(props) {
@@ -41,16 +41,22 @@ export default class MaMap extends React.Component {
                 <Marker position={[this.props.userLat, this.props.userLng]}>
                     <Popup>{"You are here"}</Popup>
                 </Marker>
-                {this.props.atmArray.map(el => (
-                    <Marker
-                        key={el._id}
-                        position={el.position}
-                        icon={this.atmIcon}>
-                        <Popup style={{textTransform: "uppercase"}}>
-                            <ForTestOnly />
-                        </Popup>
-                    </Marker>
-                ))}
+                {this.props.atmArray.map(el => {
+                    const coords = [
+                        el.position.coordinates[1],
+                        el.position.coordinates[0],
+                    ];
+                    return (
+                        <Marker
+                            key={el._id}
+                            position={coords}
+                            icon={this.atmIcon}>
+                            <Popup style={{textTransform: "uppercase"}}>
+                                <TxtPop data={el} />
+                            </Popup>
+                        </Marker>
+                    );
+                })}
             </Map>
         );
     }

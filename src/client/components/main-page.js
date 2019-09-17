@@ -38,13 +38,15 @@ const useStyles = makeStyles(theme => ({
         width: "350px",
         textAlign: "center",
         height: "60px",
-        borderBottom: "1px solid black",
-        borderRight: "1px solid black",
+        borderLeft: "10px solid #16324F !important",
+        border: "1px solid #16324F",
         background: "whitesmoke",
+        marginBottom: "5px",
     },
     addresslist: {
         paddingTop: "6%",
         marginRight: "1%",
+        marginLeft: "1%",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
@@ -54,17 +56,46 @@ const useStyles = makeStyles(theme => ({
     },
     btnTitle: {
         fontSize: 17,
+        color: "#16324F",
+        fontFamily: "Roboto, sans-serif",
+        fontWeight: "bold",
+        fontStyle: "italic",
     },
     btnaddress: {
-        fontSize: 12,
+        fontSize: 13,
     },
     ListDiv: {
         display: "flex",
         justifyContent: "space-between",
     },
+    distance: {
+        fontSize: "10px",
+        position: "absolute",
+        right: 0,
+        paddingRight: "5px",
+        color: "gray",
+    },
 }));
 
 function MainList(props) {
+    function getDistance(latAtm, longAtm) {
+        const RAYON = 6378000;
+        const radlat1 = (Math.PI * props.userLat) / 180;
+        const radlat2 = (Math.PI * latAtm) / 180;
+        const radlong1 = (Math.PI * props.userLng) / 180;
+        const radlong2 = (Math.PI * longAtm) / 180;
+        const dist =
+            RAYON *
+            (Math.PI / 2 -
+                Math.asin(
+                    Math.sin(radlat2) * Math.sin(radlat1) +
+                        Math.cos(radlong2 - radlong1) *
+                            Math.cos(radlat2) *
+                            Math.cos(radlat1),
+                ));
+        return `${Math.floor(dist)} m`;
+    }
+
     const classes = useStyles();
     const drawer = (
         <div className={classes.ListDiv}>
@@ -75,25 +106,38 @@ function MainList(props) {
                 userLng={props.userLng}
             />
             <List className={classes.addresslist}>
-                {props.atmArray.map(element => (
-                    <Button
-                        className={classes.card}
-                        key={element._id}
-                        coords={element.position}>
-                        <CardContent className={classes.cardContent}>
-                            <Typography
-                                variant={"h6"}
-                                className={classes.btnTitle}>
-                                {"Belfius"}
-                            </Typography>
-                            <Typography
-                                className={classes.btnaddress}
-                                variant={"body1"}>
-                                {element.address}
-                            </Typography>
-                        </CardContent>
-                    </Button>
-                ))}
+                {props.atmArray.map(element => {
+                    if (element.address === null) {
+                        element.address = "Adresse inconnue";
+                    }
+
+                    return (
+                        <Button
+                            className={classes.card}
+                            key={element._id}
+                            coords={element.position}>
+                            <CardContent className={classes.cardContent}>
+                                <Typography className={classes.distance}>
+                                    {"Distance :"}{" "}
+                                    {getDistance(
+                                        element.latitude,
+                                        element.longitude,
+                                    )}
+                                </Typography>
+                                <Typography
+                                    variant={"h6"}
+                                    className={classes.btnTitle}>
+                                    {"Belfius"}
+                                </Typography>
+                                <Typography
+                                    className={classes.btnaddress}
+                                    variant={"body1"}>
+                                    {element.address}
+                                </Typography>
+                            </CardContent>
+                        </Button>
+                    );
+                })}
             </List>
         </div>
     );

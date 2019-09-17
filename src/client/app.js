@@ -12,11 +12,14 @@ import Header from "./components/header";
 import MainPage from "./components/main-page";
 import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import "@babel/polyfill";
 export default class Trouvkach extends Component {
     constructor(props) {
         super(props);
         this.state = {
             atmArray: [],
+            bankArray: [],
+            loadingBank: true,
             loading: true,
             userLat: null,
             userLng: null,
@@ -47,19 +50,23 @@ export default class Trouvkach extends Component {
 
     getAtm() {
         axios
-            .get(
-                `http://localhost/api/terminal/${this.state.userLat}/${this.state.userLng}/1`,
-            )
+            .get(`/api/terminal/${this.state.userLat}/${this.state.userLng}`)
             .then(response => {
                 this.setState(() => ({
                     atmArray: response.data.map(atm => atm),
                     loadingAtm: false,
                 }));
             });
+        axios.get(`/api/banks/`).then(response => {
+            this.setState(() => ({
+                bankArray: response.data.map(bank => bank),
+                loadingBank: false,
+            }));
+        });
     }
 
     render() {
-        if (this.state.loading) {
+        if (this.state.loading && this.state.loadingBank) {
             return <CircularProgress disableShrink />;
         }
         return (
@@ -70,6 +77,7 @@ export default class Trouvkach extends Component {
                     atmArray={this.state.atmArray}
                     userLat={this.state.userLat}
                     userLng={this.state.userLng}
+                    bankArray={this.state.bankArray}
                 />
             </div>
         );

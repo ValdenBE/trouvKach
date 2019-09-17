@@ -31,6 +31,33 @@ exports.findQt = (req, res) => {
         });
 };
 
+exports.geoOrd = (req, res) => {
+    const long = parseFloat(req.params.lng);
+    const lat = parseFloat(req.params.lat);
+    console.log([long, lat]);
+    terminal.aggregate(
+        [
+            {
+                $geoNear: {
+                    near: {
+                        type: "Point",
+                        coordinates: [long, lat],
+                    },
+                    distanceField: "dist.calculated",
+                    maxDistance: 500,
+                    spherical: true,
+                },
+            },
+        ],
+        (err, data) => {
+            if (err) {
+                throw err;
+            }
+            return res.json(data);
+        },
+    );
+};
+
 exports.geoLocTerm = (req, res) => {
     const radius = 0.009;
     const minLat = req.params.lat - radius * req.params.rad;
@@ -43,7 +70,7 @@ exports.geoLocTerm = (req, res) => {
         .within({
             box: [[minLat, minLng], [maxLat, maxLng]],
         })
-        .limit(10)
+        .limit(15)
         .then(terminals => {
             res.json(terminals);
         })
@@ -63,7 +90,10 @@ exports.updateAll = async () => {
         document
             .update({
                 $set: {
-                    position: [document.latitude, document.longitude],
+                    position: {
+                        type: "Point",
+                        coordinates: [document.longitude, document.latitude],
+                    },
                 },
             })
             .exec(() => {

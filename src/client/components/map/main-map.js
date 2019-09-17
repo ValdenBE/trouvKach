@@ -13,6 +13,7 @@ const mapStyle = {
     width: "947px",
     marginTop: "6%",
     marginLeft: "1%",
+    border: "1px solid #16324F",
 };
 export default class MainMap extends React.Component {
     constructor(props) {
