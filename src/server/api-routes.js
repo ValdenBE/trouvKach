@@ -19,6 +19,8 @@ router.get("/", (req, res) => {
 });
 
 router.get("/banks", banks.findAll);
+router.get("/bank/:id", banks.findByID);
+
 router.get("/terminals", terminals.findAll);
 router.get("/term/:nb", terminals.findQt);
 

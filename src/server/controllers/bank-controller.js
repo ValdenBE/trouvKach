@@ -13,3 +13,17 @@ exports.findAll = (req, res) => {
             });
         });
 };
+
+exports.findByID = (req, res) => {
+    bank.find({_id: req.params.id})
+        .then(banks => {
+            res.json(banks);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message ||
+                    "Some error occurred while retrieving banks.",
+            });
+        });
+};
