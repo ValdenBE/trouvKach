@@ -1,20 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
 import List from "@material-ui/core/List";
-//import ListItem from "@material-ui/core/ListItem";
-//import ListItemText from "@material-ui/core/ListItemText";
-import {makeStyles, useTheme} from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import MainMap from "./map/main-map";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-
-import Portal from "@material-ui/core/Portal";
-
-import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
 const drawerWidth = 240;
@@ -22,12 +11,6 @@ const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
     root: {
         display: "flex",
-    },
-    drawer: {
-        [theme.breakpoints.up("sm")]: {
-            width: drawerWidth,
-            flexShrink: 0,
-        },
     },
     appBar: {
         marginLeft: drawerWidth,
@@ -41,149 +24,81 @@ const useStyles = makeStyles(theme => ({
             display: "none",
         },
     },
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-        marginTop: "64px",
-        width: "350px",
-        background: "transparent",
-        border: "none",
-    },
     content: {
         flexGrow: 1,
         padding: theme.spacing(4),
         paddingTop: "88px",
     },
-    // infos: {
-    //     justifyContent: "space-around",
-    //     display: "flex",
-    // },
-    alert: {
-        padding: theme.spacing(1),
-        margin: theme.spacing(1, 0),
-        border: "1px solid",
-        borderColor: theme.palette.text.primary,
+    buttonsList: {
+        width: "100%",
+        backgroundColor: "transparent",
     },
     card: {
         minWidth: 275,
+        width: "350px",
+        textAlign: "center",
+        height: "60px",
+        borderBottom: "1px solid black",
+        borderRight: "1px solid black",
+        background: "whitesmoke",
     },
-    bullet: {
-        display: "inline-block",
-        margin: "0 2px",
-        transform: "scale(0.8)",
+    addresslist: {
+        paddingTop: "6%",
+        marginRight: "1%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-end",
     },
-    title: {
-        fontSize: 14,
+    cardContent: {
+        paddingBottom: 0,
     },
-    address: {
-        fontSize: 14,
+    btnTitle: {
+        fontSize: 17,
     },
-    pos: {
-        marginBottom: 12,
+    btnaddress: {
+        fontSize: 12,
+    },
+    ListDiv: {
+        display: "flex",
+        justifyContent: "space-between",
     },
 }));
 
-function ResponsiveDrawer(props) {
-    const {container} = props;
+function MainList(props) {
     const classes = useStyles();
-    const theme = useTheme();
-    const [mobileOpen, setMobileOpen] = React.useState(false);
-    const containerPortal = React.useRef(null);
-
-    function handleDrawerToggle() {
-        setMobileOpen(!mobileOpen);
-    }
-
     const drawer = (
-        <div>
-            <Divider />
+        <div className={classes.ListDiv}>
+            <MainMap
+                className={classes.mainmap}
+                atmArray={props.atmArray}
+                userLat={props.userLat}
+                userLng={props.userLng}
+            />
             <List className={classes.addresslist}>
                 {props.atmArray.map(element => (
                     <Button
+                        className={classes.card}
                         key={element._id}
-                        coords={element.position}
-                        variant={"outlined"}
-                        size={"large"}
-                        color={"primary"}
-                        className={classes.addressText}>
-                        <Card className={classes.card}>
-                            <CardContent>
-                                <Typography
-                                    className={classes.title}
-                                    color={"textSecondary"}
-                                    gutterBottom>
-                                    {"Belfius"}
-                                </Typography>
-                                <Typography
-                                    className={classes.address}
-                                    component={"h2"}>
-                                    {element.address}
-                                </Typography>
-                            </CardContent>
-                        </Card>
+                        coords={element.position}>
+                        <CardContent className={classes.cardContent}>
+                            <Typography
+                                variant={"h6"}
+                                className={classes.btnTitle}>
+                                {"Belfius"}
+                            </Typography>
+                            <Typography
+                                className={classes.btnaddress}
+                                variant={"body1"}>
+                                {element.address}
+                            </Typography>
+                        </CardContent>
                     </Button>
                 ))}
             </List>
         </div>
     );
 
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
-
-            <nav className={classes.drawer} aria-label={"mailbox folders"}>
-                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-                <Hidden smUp implementation={"css"}>
-                    <Drawer
-                        container={container}
-                        variant={"temporary"}
-                        anchor={theme.direction === "rtl" ? "right" : "left"}
-                        open={mobileOpen}
-                        onClose={handleDrawerToggle}
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        ModalProps={{
-                            keepMounted: true, // Better open performance on mobile.
-                        }}>
-                        {drawer}
-                    </Drawer>
-                </Hidden>
-                <Hidden xsDown implementation={"css"}>
-                    <Drawer
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        variant={"permanent"}
-                        open>
-                        {drawer}
-                    </Drawer>
-                </Hidden>
-            </nav>
-            <main className={classes.content}>
-                <Typography paragraph>
-                    <span className={classes.infos}>
-                        <Portal container={containerPortal.current}>
-                            <MainMap
-                                atmArray={props.atmArray}
-                                userLat={props.userLat}
-                                userLng={props.userLng}
-                            />
-                        </Portal>
-                    </span>
-                </Typography>
-            </main>
-        </div>
-    );
+    return <div>{drawer}</div>;
 }
 
-ResponsiveDrawer.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    container: PropTypes.instanceOf(
-        typeof Element === "undefined" ? Object : Element,
-    ),
-};
-
-export default ResponsiveDrawer;
+export default MainList;
