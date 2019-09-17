@@ -19,9 +19,7 @@ export default class MainMap extends React.Component {
         super(props);
         this.zoom = 16;
     }
-
     render() {
-        console.log(this.props.currentAtm);
         return (
             <div id={"mapContainer"} style={mapStyle}>
                 <MaMap

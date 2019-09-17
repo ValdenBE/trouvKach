@@ -25,11 +25,25 @@ export default class MaMap extends React.Component {
             mapCenter: [this.props.userLat, this.props.userLng],
         };
     }
+    // pour update state des props
+    static getDerivedStateFromProps(props, state) {
+        if (Array.isArray(props.currentAtm)) {
+            if (
+                props.currentAtm[0] !== state.mapCenter[0] ||
+                props.currentAtm[1] !== state.mapCenter[1]
+            ) {
+                return {mapCenter: props.currentAtm};
+            }
+        }
+        return null;
+    }
 
     render() {
         const styleMap = {
             height: "500px",
         };
+
+        console.log(this.props.currentAtm);
         return (
             <Map
                 center={this.state.mapCenter}
@@ -41,6 +55,7 @@ export default class MaMap extends React.Component {
                     }
                     url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
                 />
+                {/* user marker position with center setState*/}
                 <Marker
                     position={[this.props.userLat, this.props.userLng]}
                     onClick={() => {
@@ -50,6 +65,8 @@ export default class MaMap extends React.Component {
                     }}>
                     <Popup>{"You are here"}</Popup>
                 </Marker>
+
+                {/* map on atm array => retrieving atm's positions and center on click  */}
                 {this.props.atmArray.map(el => {
                     const coords = [
                         el.position.coordinates[1],
