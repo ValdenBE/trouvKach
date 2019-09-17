@@ -93,6 +93,24 @@ function ResponsiveDrawer(props) {
         setMobileOpen(!mobileOpen);
     }
 
+    function getDistance(latAtm, longAtm) {
+        const RAYON = 6378000;
+        const radlat1 = (Math.PI * props.userLat) / 180;
+        const radlat2 = (Math.PI * latAtm) / 180;
+        const radlong1 = (Math.PI * props.userLng) / 180;
+        const radlong2 = (Math.PI * longAtm) / 180;
+        const dist =
+            RAYON *
+            (Math.PI / 2 -
+                Math.asin(
+                    Math.sin(radlat2) * Math.sin(radlat1) +
+                        Math.cos(radlong2 - radlong1) *
+                            Math.cos(radlat2) *
+                            Math.cos(radlat1),
+                ));
+        return `${Math.floor(dist)} m`;
+    }
+
     const drawer = (
         <div>
             <Divider />
@@ -111,7 +129,11 @@ function ResponsiveDrawer(props) {
                                     className={classes.title}
                                     color={"textSecondary"}
                                     gutterBottom>
-                                    {"Belfius"}
+                                    {"Belfius "}
+                                    {getDistance(
+                                        element.latitude,
+                                        element.longitude,
+                                    )}
                                 </Typography>
                                 <Typography
                                     className={classes.address}

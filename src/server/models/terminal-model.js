@@ -10,7 +10,10 @@ const terminalSchema = new mongoose.Schema({
     created_at: String,
     updated_at: String,
     deleted_at: String,
-    position: Array,
+    position: {
+        type: {type: String},
+        coordinates: [Number],
+    },
 });
 
 module.exports = mongoose.model("terminal", terminalSchema);
