@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import List from "@material-ui/core/List";
 import {makeStyles} from "@material-ui/core/styles";
 import MainMap from "./map/main-map";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
+import "@babel/polyfill";
 
 const drawerWidth = 240;
 
@@ -78,6 +79,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function MainList(props) {
+    const [currentAtm, setAtm] = useState();
     function getDistance(latAtm, longAtm) {
         const RAYON = 6378000;
         const radlat1 = (Math.PI * props.userLat) / 180;
@@ -104,18 +106,24 @@ function MainList(props) {
                 atmArray={props.atmArray}
                 userLat={props.userLat}
                 userLng={props.userLng}
+                currentAtm={currentAtm}
             />
             <List className={classes.addresslist}>
                 {props.atmArray.map(element => {
                     if (element.address === null) {
                         element.address = "Adresse inconnue";
                     }
-
                     return (
                         <Button
                             className={classes.card}
                             key={element._id}
-                            coords={element.position}>
+                            coords={element.position}
+                            onClick={() =>
+                                setAtm([
+                                    element.position.coordinates[1],
+                                    element.position.coordinates[0],
+                                ])
+                            }>
                             <CardContent className={classes.cardContent}>
                                 <Typography className={classes.distance}>
                                     {"Distance :"}{" "}
