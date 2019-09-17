@@ -10,6 +10,10 @@ import React, {Component} from "react";
 import ReactDOM from "react-dom";
 import Header from "./components/header";
 import MainPage from "./components/main-page";
+import Index from "./components/index/index";
+import List from "./components/index/list/list";
+import Display from "./components/index/list/display/display";
+import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "@babel/polyfill";
@@ -79,6 +83,28 @@ export default class Trouvkach extends Component {
                     userLng={this.state.userLng}
                     bankArray={this.state.bankArray}
                 />
+                <Grid
+                    container
+                    direction={"column"}
+                    justify={"flex-start"}
+                    alignItems={"center"}>
+                    <Index
+                        handleViewListUpdate={this.updateState.bind(this)}
+                        viewList={this.state.viewList}
+                        atmArray={this.state.atmArray}
+                    />
+                    <List
+                        viewList={this.state.viewList}
+                        viewContentUpdate={this.updateStateContent.bind(this)}
+                        atmArray={this.state.atmArray}
+                    />
+                    <Display
+                        viewContent={this.state.viewContent}
+                        atmArray={this.state.atmArray}
+                        userLat={this.state.userLat}
+                        userLng={this.state.userLng}
+                    />
+                </Grid>
             </div>
         );
     }
