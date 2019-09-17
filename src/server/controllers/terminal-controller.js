@@ -34,7 +34,6 @@ exports.findQt = (req, res) => {
 exports.geoOrd = (req, res) => {
     const long = parseFloat(req.params.lng);
     const lat = parseFloat(req.params.lat);
-    console.log([long, lat]);
     terminal.aggregate(
         [
             {
@@ -44,7 +43,7 @@ exports.geoOrd = (req, res) => {
                         coordinates: [long, lat],
                     },
                     distanceField: "dist.calculated",
-                    maxDistance: 500,
+                    maxDistance: 1000,
                     spherical: true,
                 },
             },
