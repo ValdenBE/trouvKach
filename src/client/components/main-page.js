@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
+import "@babel/polyfill";
 import PropTypes from "prop-types";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
@@ -88,6 +89,7 @@ function ResponsiveDrawer(props) {
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const containerPortal = React.useRef(null);
+    const [currentAtm, setAtm] = useState();
 
     function handleDrawerToggle() {
         setMobileOpen(!mobileOpen);
@@ -118,11 +120,17 @@ function ResponsiveDrawer(props) {
                 {props.atmArray.map(element => (
                     <Button
                         key={element._id}
-                        coords={element.position}
+                        // coords={element.position}
                         variant={"outlined"}
                         size={"large"}
                         color={"primary"}
-                        className={classes.addressText}>
+                        className={classes.addressText}
+                        onClick={() =>
+                            setAtm([
+                                element.position.coordinates[1],
+                                element.position.coordinates[0],
+                            ])
+                        }>
                         <Card className={classes.card}>
                             <CardContent>
                                 <Typography
@@ -189,6 +197,7 @@ function ResponsiveDrawer(props) {
                                 atmArray={props.atmArray}
                                 userLat={props.userLat}
                                 userLng={props.userLng}
+                                currentAtm={currentAtm}
                             />
                         </Portal>
                     </span>

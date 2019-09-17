@@ -21,15 +21,32 @@ export default class MaMap extends React.Component {
             iconAnchor: [22, 92],
             popupAnchor: [-3, -76],
         });
+        this.state = {
+            mapCenter: [this.props.userLat, this.props.userLng],
+        };
+    }
+    // pour update state des props
+    static getDerivedStateFromProps(props, state) {
+        if (Array.isArray(props.currentAtm)) {
+            if (
+                props.currentAtm[0] !== state.mapCenter[0] ||
+                props.currentAtm[1] !== state.mapCenter[1]
+            ) {
+                return {mapCenter: props.currentAtm};
+            }
+        }
+        return null;
     }
 
     render() {
         const styleMap = {
             height: "500px",
         };
+
+        console.log(this.props.currentAtm);
         return (
             <Map
-                center={[this.props.userLat, this.props.userLng]}
+                center={this.state.mapCenter}
                 zoom={this.props.zoom}
                 style={styleMap}>
                 <TileLayer
@@ -38,9 +55,18 @@ export default class MaMap extends React.Component {
                     }
                     url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
                 />
-                <Marker position={[this.props.userLat, this.props.userLng]}>
+                {/* user marker position with center setState*/}
+                <Marker
+                    position={[this.props.userLat, this.props.userLng]}
+                    onClick={() => {
+                        this.setState({
+                            mapCenter: [this.props.userLat, this.props.userLng],
+                        });
+                    }}>
                     <Popup>{"You are here"}</Popup>
                 </Marker>
+
+                {/* map on atm array => retrieving atm's positions and center on click  */}
                 {this.props.atmArray.map(el => {
                     const coords = [
                         el.position.coordinates[1],
@@ -50,7 +76,15 @@ export default class MaMap extends React.Component {
                         <Marker
                             key={el._id}
                             position={coords}
-                            icon={this.atmIcon}>
+                            icon={this.atmIcon}
+                            onClick={() => {
+                                this.setState({
+                                    mapCenter: [
+                                        el.position.coordinates[1],
+                                        el.position.coordinates[0],
+                                    ],
+                                });
+                            }}>
                             <Popup style={{textTransform: "uppercase"}}>
                                 <TxtPop data={el} />
                             </Popup>
