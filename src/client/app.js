@@ -47,9 +47,7 @@ export default class Trouvkach extends Component {
 
     getAtm() {
         axios
-            .get(
-                `http://localhost/api/terminal/${this.state.userLat}/${this.state.userLng}`,
-            )
+            .get(`/api/terminal/${this.state.userLat}/${this.state.userLng}`)
             .then(response => {
                 this.setState(() => ({
                     atmArray: response.data.map(atm => atm),
