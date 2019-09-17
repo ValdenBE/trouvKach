@@ -17,10 +17,11 @@ const mapStyle = {
 export default class MainMap extends React.Component {
     constructor(props) {
         super(props);
-        this.zoom = 15;
+        this.zoom = 16;
     }
 
     render() {
+        console.log(this.props.currentAtm);
         return (
             <div id={"mapContainer"} style={mapStyle}>
                 <MaMap
@@ -29,6 +30,7 @@ export default class MainMap extends React.Component {
                     zoom={this.zoom}
                     className={"leaflet-container"}
                     atmArray={this.props.atmArray}
+                    currentAtm={this.props.currentAtm}
                 />
             </div>
         );

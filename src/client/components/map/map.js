@@ -21,6 +21,9 @@ export default class MaMap extends React.Component {
             iconAnchor: [22, 92],
             popupAnchor: [-3, -76],
         });
+        this.state = {
+            mapCenter: [this.props.userLat, this.props.userLng],
+        };
     }
 
     render() {
@@ -29,7 +32,7 @@ export default class MaMap extends React.Component {
         };
         return (
             <Map
-                center={[this.props.userLat, this.props.userLng]}
+                center={this.state.mapCenter}
                 zoom={this.props.zoom}
                 style={styleMap}>
                 <TileLayer
@@ -38,7 +41,13 @@ export default class MaMap extends React.Component {
                     }
                     url={"https://{s}.tile.osm.org/{z}/{x}/{y}.png"}
                 />
-                <Marker position={[this.props.userLat, this.props.userLng]}>
+                <Marker
+                    position={[this.props.userLat, this.props.userLng]}
+                    onClick={() => {
+                        this.setState({
+                            mapCenter: [this.props.userLat, this.props.userLng],
+                        });
+                    }}>
                     <Popup>{"You are here"}</Popup>
                 </Marker>
                 {this.props.atmArray.map(el => {
@@ -50,7 +59,15 @@ export default class MaMap extends React.Component {
                         <Marker
                             key={el._id}
                             position={coords}
-                            icon={this.atmIcon}>
+                            icon={this.atmIcon}
+                            onClick={() => {
+                                this.setState({
+                                    mapCenter: [
+                                        el.position.coordinates[1],
+                                        el.position.coordinates[0],
+                                    ],
+                                });
+                            }}>
                             <Popup style={{textTransform: "uppercase"}}>
                                 <TxtPop data={el} />
                             </Popup>
