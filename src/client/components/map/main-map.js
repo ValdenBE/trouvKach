@@ -10,11 +10,10 @@ import * as React from "react";
 import MaMap from "./map";
 // import axios from "axios";
 const mapStyle = {
-    width: "70%",
-    height: "70%",
-    marginTop: "6%",
-    marginLeft: "1%",
-    border: "1px solid #16324F",
+    width: "95rem",
+    marginTop: "8rem",
+    marginLeft: "1rem",
+    border: "0.rem solid #16324F",
 };
 export default class MainMap extends React.Component {
     constructor(props) {
