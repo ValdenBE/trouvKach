@@ -43,12 +43,8 @@ export default class MaMap extends React.Component {
             height: "500px",
         };
 
-        console.log(this.props.currentAtm);
         return (
-            <Map
-                center={this.state.mapCenter}
-                zoom={this.props.zoom}
-                style={styleMap}>
+            <Map center={this.state.mapCenter} zoom={16} style={styleMap}>
                 <TileLayer
                     attribution={
                         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

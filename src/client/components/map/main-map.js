@@ -10,7 +10,8 @@ import * as React from "react";
 import MaMap from "./map";
 // import axios from "axios";
 const mapStyle = {
-    width: "947px",
+    width: "70%",
+    height: "70%",
     marginTop: "6%",
     marginLeft: "1%",
     border: "1px solid #16324F",

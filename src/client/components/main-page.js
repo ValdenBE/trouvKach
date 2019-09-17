@@ -35,10 +35,9 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "transparent",
     },
     card: {
-        minWidth: 275,
-        width: "350px",
+        width: "100%",
         textAlign: "center",
-        height: "60px",
+        height: "5rem",
         borderLeft: "10px solid #16324F !important",
         border: "1px solid #16324F",
         background: "whitesmoke",
@@ -51,6 +50,7 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
+        width: "30%",
     },
     cardContent: {
         paddingBottom: 0,
@@ -97,6 +97,16 @@ function MainList(props) {
                 ));
         return `${Math.floor(dist)} m`;
     }
+
+    // const [showAtmPopup, setShowAtmPopup] = useState(false);
+
+    // function showAtmPopUp() {
+    //     setShowAtmPopup(true);
+    // }
+
+    // function hideAtmPopup() {
+    //     setShowAtmPopup(false);
+    // }
 
     const classes = useStyles();
     const drawer = (
