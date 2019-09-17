@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start": "npm run build:server && npm run build:client",
     "mongo:import:banks": "docker-compose exec mongo mongoimport --authenticationDatabase admin -u dev -p dev -c banks -d trouvkash --file /usr/dump/banks.json --jsonArray",
     "mongo:import:terminals": "docker-compose exec mongo mongoimport --authenticationDatabase admin -u dev -p dev -c terminals -d trouvkash --file /usr/dump/terminals.json --jsonArray",
     "lint": "npx eslint --fix --cache --ignore-pattern 'docs/*' src",
