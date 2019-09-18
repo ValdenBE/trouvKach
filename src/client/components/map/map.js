@@ -82,7 +82,7 @@ export default class MaMap extends React.Component {
                                 });
                             }}>
                             <Popup style={{textTransform: "uppercase"}}>
-                                <TxtPop data={el} />
+                                <TxtPop atm={el} banks={this.props.bankArray} />
                             </Popup>
                         </Marker>
                     );

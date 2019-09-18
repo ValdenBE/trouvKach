@@ -80,10 +80,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function MainList(props) {
-    const [bankColor, setBankColor] = useState("whitesmoke");
-
-    console.log(bankColor);
-
     const [currentAtm, setAtm] = useState();
     function getDistance(latAtm, longAtm) {
         const RAYON = 6378000;
@@ -122,10 +118,22 @@ function MainList(props) {
                 userLat={props.userLat}
                 userLng={props.userLng}
                 currentAtm={currentAtm}
+                bankArray={props.bankArray}
             />
             <List className={classes.addresslist}>
                 {/* mapping on Atm array */}
                 {props.atmArray.map(element => {
+                    const matchingBank = props.bankArray.find(bank => {
+                        if (element.bank !== null) {
+                            return bank._id === element.bank;
+                        }
+                        return null;
+                    });
+
+                    const bankAtm = matchingBank
+                        ? matchingBank.name
+                        : "Banque inconnue";
+
                     if (element.address === null) {
                         element.address = "Adresse inconnue";
                     }
@@ -151,11 +159,7 @@ function MainList(props) {
                                 <Typography
                                     variant={"h6"}
                                     className={classes.btnTitle}>
-                                    {props.bankArray.map(el =>
-                                        (element.bank === el._id
-                                            ? el.name
-                                            : null)
-                                    )}
+                                    {bankAtm}
                                 </Typography>
                                 <Typography
                                     className={classes.btnaddress}
