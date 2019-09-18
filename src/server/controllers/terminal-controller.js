@@ -86,19 +86,18 @@ exports.geoLocTerm = (req, res) => {
         });
 };
 
-exports.updateTerm = req => {
-    terminal
-        .updateOne(
-            {_id: req.params.id},
-            {
-                $set: {
-                    empty: true,
-                },
-            },
-        )
-        .exec(() => {
-            console.log("Term updated empty");
-        });
+exports.updateEmpty = req => {
+    terminal.updateOne({_id: req.params.id}, {empty: true}).exec(() => {
+        console.log("Term updated empty");
+    });
+};
+
+exports.updateDelete = req => {
+    const deleted = new Date();
+    terminal.updateOne(
+        {_id: req.params.id},
+        {deleted_at: deleted.toISOString()},
+    );
 };
 
 // Update lat. and long. to 1 position property

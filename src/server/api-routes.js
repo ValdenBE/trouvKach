@@ -26,6 +26,7 @@ router.get("/term/:nb", terminals.findQt);
 router.get("/getterm/:id", terminals.getTerm);
 
 router.get("/terminal/:lat/:lng", terminals.geoOrd);
-router.get("/update/:id", terminals.updateTerm);
+router.get("/empty/:id", terminals.updateEmpty);
+router.get("/delete/:id", terminals.updateDelete);
 
 module.exports = router;
