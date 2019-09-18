@@ -7,11 +7,12 @@ import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import "@babel/polyfill";
 
-const drawerWidth = 240;
+const drawerWidth = "24rem";
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: "flex",
+        fontSize: "2rem",
     },
     appBar: {
         marginLeft: drawerWidth,
@@ -28,52 +29,52 @@ const useStyles = makeStyles(theme => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing(4),
-        paddingTop: "88px",
+        paddingTop: "8.rem",
     },
     buttonsList: {
         width: "100%",
         backgroundColor: "transparent",
     },
     card: {
-        minWidth: 275,
-        width: "350px",
+        width: "100%",
         textAlign: "center",
-        height: "60px",
-        borderLeft: "10px solid #16324F !important",
-        border: "1px solid #16324F",
+        height: "6rem",
+        borderLeft: "1rem solid #16324F !important",
+        border: "0.1rem solid #16324F",
         background: "whitesmoke",
-        marginBottom: "5px",
+        marginBottom: "0.5rem",
     },
     addresslist: {
-        paddingTop: "6%",
-        marginRight: "1%",
-        marginLeft: "1%",
+        paddingTop: "8rem",
+        marginRight: "1rem",
+        marginLeft: "2rem",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
+        width: "30%",
     },
     cardContent: {
         paddingBottom: 0,
     },
     btnTitle: {
-        fontSize: 17,
+        fontSize: "1.7rem",
         color: "#16324F",
         fontFamily: "Roboto, sans-serif",
         fontWeight: "bold",
         fontStyle: "italic",
     },
     btnaddress: {
-        fontSize: 13,
+        fontSize: "1.3rem",
     },
     ListDiv: {
         display: "flex",
         justifyContent: "space-between",
     },
     distance: {
-        fontSize: "10px",
+        fontSize: "1rem",
         position: "absolute",
         right: 0,
-        paddingRight: "5px",
+        paddingRight: "0.5rem",
         color: "gray",
     },
 }));
@@ -98,6 +99,16 @@ function MainList(props) {
         return `${Math.floor(dist)} m`;
     }
 
+    // const [showAtmPopup, setShowAtmPopup] = useState(false);
+
+    // function showAtmPopUp() {
+    //     setShowAtmPopup(true);
+    // }
+
+    // function hideAtmPopup() {
+    //     setShowAtmPopup(false);
+    // }
+
     const classes = useStyles();
     const drawer = (
         <div className={classes.ListDiv}>
@@ -107,9 +118,22 @@ function MainList(props) {
                 userLat={props.userLat}
                 userLng={props.userLng}
                 currentAtm={currentAtm}
+                bankArray={props.bankArray}
             />
             <List className={classes.addresslist}>
+                {/* mapping on Atm array */}
                 {props.atmArray.map(element => {
+                    const matchingBank = props.bankArray.find(bank => {
+                        if (element.bank !== null) {
+                            return bank._id === element.bank;
+                        }
+                        return null;
+                    });
+
+                    const bankAtm = matchingBank
+                        ? matchingBank.name
+                        : "Banque inconnue";
+
                     if (element.address === null) {
                         element.address = "Adresse inconnue";
                     }
@@ -135,7 +159,7 @@ function MainList(props) {
                                 <Typography
                                     variant={"h6"}
                                     className={classes.btnTitle}>
-                                    {"Belfius"}
+                                    {bankAtm}
                                 </Typography>
                                 <Typography
                                     className={classes.btnaddress}

@@ -19,6 +19,7 @@ export default class Trouvkach extends Component {
         this.state = {
             atmArray: [],
             bankArray: [],
+            loadingAtm: true,
             loadingBank: true,
             loading: true,
             userLat: null,
@@ -48,8 +49,8 @@ export default class Trouvkach extends Component {
         }));
     }
 
-    getAtm() {
-        axios
+    async getAtm() {
+        await axios
             .get(`/api/terminal/${this.state.userLat}/${this.state.userLng}`)
             .then(response => {
                 this.setState(() => ({
@@ -57,7 +58,8 @@ export default class Trouvkach extends Component {
                     loadingAtm: false,
                 }));
             });
-        axios.get(`/api/banks/`).then(response => {
+
+        await axios.get(`/api/banks/`).then(response => {
             this.setState(() => ({
                 bankArray: response.data.map(bank => bank),
                 loadingBank: false,
@@ -66,7 +68,11 @@ export default class Trouvkach extends Component {
     }
 
     render() {
-        if (this.state.loading && this.state.loadingBank) {
+        if (
+            this.state.loading &&
+            this.state.loadingBank &&
+            this.state.loadingAtm
+        ) {
             return <CircularProgress disableShrink />;
         }
         return (
