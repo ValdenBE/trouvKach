@@ -43,6 +43,8 @@
     "husky": "^3.0.5",
     "lint-staged": "^9.2.5",
     "prettier": "^1.18.2",
+    "react-inlinesvg": "^1.1.6",
+    "svg-inline-loader": "^0.8.0",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
