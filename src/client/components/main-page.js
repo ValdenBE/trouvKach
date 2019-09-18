@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
-        width: "34rem",
+        width: "30%",
     },
     cardContent: {
         paddingBottom: 0,
