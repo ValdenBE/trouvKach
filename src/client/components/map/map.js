@@ -44,10 +44,7 @@ export default class MaMap extends React.Component {
         };
 
         return (
-            <Map
-                center={this.state.mapCenter}
-                zoom={this.props.zoom}
-                style={styleMap}>
+            <Map center={this.state.mapCenter} zoom={16} style={styleMap}>
                 <TileLayer
                     attribution={
                         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -85,7 +82,7 @@ export default class MaMap extends React.Component {
                                 });
                             }}>
                             <Popup style={{textTransform: "uppercase"}}>
-                                <TxtPop data={el} />
+                                <TxtPop atm={el} banks={this.props.bankArray} />
                             </Popup>
                         </Marker>
                     );

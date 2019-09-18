@@ -104,6 +104,16 @@ function MainList(props) {
         return `${Math.floor(dist)} m`;
     }
 
+    // const [showAtmPopup, setShowAtmPopup] = useState(false);
+
+    // function showAtmPopUp() {
+    //     setShowAtmPopup(true);
+    // }
+
+    // function hideAtmPopup() {
+    //     setShowAtmPopup(false);
+    // }
+
     const classes = useStyles();
     const drawer = (
         <div className={classes.ListDiv}>
@@ -113,9 +123,22 @@ function MainList(props) {
                 userLat={props.userLat}
                 userLng={props.userLng}
                 currentAtm={currentAtm}
+                bankArray={props.bankArray}
             />
             <List className={classes.addresslist}>
+                {/* mapping on Atm array */}
                 {props.atmArray.map(element => {
+                    const matchingBank = props.bankArray.find(bank => {
+                        if (element.bank !== null) {
+                            return bank._id === element.bank;
+                        }
+                        return null;
+                    });
+
+                    const bankAtm = matchingBank
+                        ? matchingBank.name
+                        : "Banque inconnue";
+
                     if (element.address === null) {
                         element.address = "Adresse inconnue";
                     }
@@ -141,7 +164,7 @@ function MainList(props) {
                                 <Typography
                                     variant={"h6"}
                                     className={classes.btnTitle}>
-                                    {"Belfius"}
+                                    {bankAtm}
                                 </Typography>
                                 <Typography
                                     className={classes.btnaddress}

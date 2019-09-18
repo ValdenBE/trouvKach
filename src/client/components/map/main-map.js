@@ -30,6 +30,7 @@ export default class MainMap extends React.Component {
                     className={"leaflet-container"}
                     atmArray={this.props.atmArray}
                     currentAtm={this.props.currentAtm}
+                    bankArray={this.props.bankArray}
                 />
             </div>
         );
