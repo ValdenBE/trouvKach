@@ -40,7 +40,7 @@ export default class MaMap extends React.Component {
 
     render() {
         const styleMap = {
-            height: "50rem",
+            height: "51.7rem",
         };
 
         return (

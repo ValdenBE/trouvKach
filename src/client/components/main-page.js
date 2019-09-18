@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import "@babel/polyfill";
-
 const drawerWidth = "24rem";
 
 const useStyles = makeStyles(theme => ({
@@ -37,24 +36,29 @@ const useStyles = makeStyles(theme => ({
     },
     card: {
         width: "100%",
-        textAlign: "center",
         height: "6rem",
         borderLeft: "1rem solid #16324F !important",
         border: "0.1rem solid #16324F",
         background: "whitesmoke",
         marginBottom: "0.5rem",
+        justifyContent: "flex-start",
+        textAlign: "left",
     },
     addresslist: {
-        paddingTop: "8rem",
+        marginTop: "8rem",
+        paddingTop: "0 !important",
         marginRight: "1rem",
         marginLeft: "2rem",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
         width: "30%",
+        height: "51rem",
+        overflow: "auto",
     },
     cardContent: {
-        paddingBottom: 0,
+        padding: "0 !important",
+        width: "100%",
     },
     btnTitle: {
         fontSize: "1.7rem",
@@ -62,6 +66,7 @@ const useStyles = makeStyles(theme => ({
         fontFamily: "Roboto, sans-serif",
         fontWeight: "bold",
         fontStyle: "italic",
+        width: "36.5rem",
     },
     btnaddress: {
         fontSize: "1.3rem",
