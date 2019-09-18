@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import "@babel/polyfill";
-import axios from "axios";
 
 const drawerWidth = "24rem";
 
@@ -81,6 +80,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function MainList(props) {
+    const [bankColor, setBankColor] = useState("whitesmoke");
+
+    console.log(bankColor);
+
     const [currentAtm, setAtm] = useState();
     function getDistance(latAtm, longAtm) {
         const RAYON = 6378000;
@@ -121,13 +124,8 @@ function MainList(props) {
                 currentAtm={currentAtm}
             />
             <List className={classes.addresslist}>
+                {/* mapping on Atm array */}
                 {props.atmArray.map(element => {
-                    axios.get(`/api/banks/`).then(response => {
-                        this.setState(() => ({
-                            bankArray: response.data.map(bank => bank),
-                            loadingBank: false,
-                        }));
-                    });
                     if (element.address === null) {
                         element.address = "Adresse inconnue";
                     }
@@ -153,7 +151,11 @@ function MainList(props) {
                                 <Typography
                                     variant={"h6"}
                                     className={classes.btnTitle}>
-                                    {"Belfius"}
+                                    {props.bankArray.map(el =>
+                                        (element.bank === el._id
+                                            ? el.name
+                                            : null)
+                                    )}
                                 </Typography>
                                 <Typography
                                     className={classes.btnaddress}
