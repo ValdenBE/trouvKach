@@ -9,19 +9,12 @@
 import * as React from "react";
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
 import L from "leaflet";
-import userImg from "./img/icons8-user-location-64.png";
 import atmImg from "./img/atm.png";
-
 import TxtPop from "./txt-pop";
+
 export default class MaMap extends React.Component {
     constructor(props) {
         super(props);
-        this.userIcon = L.icon({
-            iconUrl: userImg,
-            iconSize: [64, 64],
-            iconAnchor: [22, 92],
-            popupAnchor: [-3, -76],
-        });
         this.atmIcon = L.icon({
             iconUrl: atmImg,
             iconSize: [38, 38],
@@ -61,7 +54,6 @@ export default class MaMap extends React.Component {
                 {/* user marker position with center setState*/}
                 <Marker
                     position={[this.props.userLat, this.props.userLng]}
-                    icon={this.userIcon}
                     onClick={() => {
                         this.setState({
                             mapCenter: [this.props.userLat, this.props.userLng],
