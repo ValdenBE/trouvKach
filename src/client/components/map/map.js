@@ -40,10 +40,9 @@ export default class MaMap extends React.Component {
 
     render() {
         const styleMap = {
-            height: "50rem",
+            height: "51.7rem",
         };
 
-        console.log(this.props.currentAtm);
         return (
             <Map
                 center={this.state.mapCenter}

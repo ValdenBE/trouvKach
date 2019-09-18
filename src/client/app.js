@@ -57,12 +57,6 @@ export default class Trouvkach extends Component {
                     loadingAtm: false,
                 }));
             });
-        axios.get(`/api/banks/`).then(response => {
-            this.setState(() => ({
-                bankArray: response.data.map(bank => bank),
-                loadingBank: false,
-            }));
-        });
     }
 
     render() {
