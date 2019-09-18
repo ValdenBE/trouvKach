@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import "@babel/polyfill";
+//import Portal from "@material-ui/core/Portal";
 const drawerWidth = "24rem";
 
 const useStyles = makeStyles(theme => ({
@@ -66,7 +67,6 @@ const useStyles = makeStyles(theme => ({
         fontFamily: "Roboto, sans-serif",
         fontWeight: "bold",
         fontStyle: "italic",
-        width: "36.5rem",
     },
     btnaddress: {
         fontSize: "1.3rem",
@@ -85,6 +85,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function MainList(props) {
+    const [show, setShow] = React.useState(false);
+    //const container = React.useRef(null);
+    function handleClick() {
+        setShow(!show);
+    }
     const [currentAtm, setAtm] = useState();
     function getDistance(latAtm, longAtm) {
         const RAYON = 6378000;
@@ -147,12 +152,13 @@ function MainList(props) {
                             className={classes.card}
                             key={element._id}
                             coords={element.position}
-                            onClick={() =>
+                            onClick={() => {
                                 setAtm([
                                     element.position.coordinates[1],
                                     element.position.coordinates[0],
-                                ])
-                            }>
+                                ]);
+                                handleClick();
+                            }}>
                             <CardContent className={classes.cardContent}>
                                 <Typography className={classes.distance}>
                                     {"Distance :"}{" "}
