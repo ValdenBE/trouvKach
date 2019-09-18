@@ -23,8 +23,10 @@ router.get("/bank/:id", banks.findByID);
 
 router.get("/terminals", terminals.findAll);
 router.get("/term/:nb", terminals.findQt);
+router.get("/getterm/:id", terminals.getTerm);
 
 router.get("/terminal/:lat/:lng", terminals.geoOrd);
-router.get("/update", terminals.updateAll);
+router.get("/empty/:id", terminals.updateEmpty);
+router.get("/delete/:id", terminals.updateDelete);
 
 module.exports = router;

@@ -14,6 +14,7 @@ const terminalSchema = new mongoose.Schema({
         type: {type: String},
         coordinates: [Number],
     },
+    empty: Boolean,
 });
 
 module.exports = mongoose.model("terminal", terminalSchema);

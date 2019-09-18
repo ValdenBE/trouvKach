@@ -31,6 +31,10 @@ exports.findQt = (req, res) => {
         });
 };
 
+exports.getTerm = (req, res) => {
+    terminal.find({_id: req.params.id}).then(atm => res.json(atm));
+};
+
 exports.geoOrd = (req, res) => {
     const long = parseFloat(req.params.lng);
     const lat = parseFloat(req.params.lat);
@@ -82,6 +86,20 @@ exports.geoLocTerm = (req, res) => {
         });
 };
 
+exports.updateEmpty = req => {
+    terminal.updateOne({_id: req.params.id}, {empty: true}).exec(() => {
+        console.log("Term updated empty");
+    });
+};
+
+exports.updateDelete = req => {
+    const deleted = new Date();
+    terminal.updateOne(
+        {_id: req.params.id},
+        {deleted_at: deleted.toISOString()},
+    );
+};
+
 // Update lat. and long. to 1 position property
 exports.updateAll = async () => {
     const test = await terminal.find();
@@ -89,10 +107,7 @@ exports.updateAll = async () => {
         document
             .update({
                 $set: {
-                    position: {
-                        type: "Point",
-                        coordinates: [document.longitude, document.latitude],
-                    },
+                    empty: false,
                 },
             })
             .exec(() => {
