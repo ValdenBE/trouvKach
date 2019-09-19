@@ -4,7 +4,7 @@ import Btnclose from "./btnclose";
 import Btnopen from "./btnopen";
 import "@babel/polyfill";
 import MainMap from "./map/main-map";
-import Button from "@material-ui/core/Button";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 function mainPage(props) {
     const [isClicked, setClicked] = React.useState();
@@ -94,44 +94,61 @@ function mainPage(props) {
                                             : classes.subdivClose
                                     }>
                                     {open}
-                                    {element.empty ? (
-                                        <Button
-                                            className={classes.button}
-                                            variant={"outlined"}
-                                            onClick={() => {
-                                                props.updateEmpty(element._id);
-                                                element.empty = false;
-                                            }}>
-                                            {"Signaler Ok"}
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            className={classes.button}
-                                            variant={"outlined"}
-                                            onClick={() => {
-                                                props.updateEmpty(element._id);
-                                                element.empty = true;
-                                            }}>
-                                            {"Signaler vide"}
-                                        </Button>
-                                    )}
-                                    {element.deleted_at === null ||
-                                    element.deleted_at === "" ? (
-                                        <Button
-                                            className={classes.button}
-                                            variant={"outlined"}
-                                            onClick={() => {
-                                                props.updateDelete(element._id);
-                                                element.deleted_at =
-                                                    "To delete";
-                                            }}>
-                                            {"N'existe plus"}
-                                        </Button>
-                                    ) : (
-                                        <span>
-                                            {"  a été marqué comme supprimé"}
-                                        </span>
-                                    )}
+                                    <div className={classes.buttonWrapper}>
+                                        {element.empty ? (
+                                            <button
+                                                type={"button"}
+                                                className={classes.buttonBis}
+                                                variant={"outlined"}
+                                                onClick={() => {
+                                                    props.updateEmpty(
+                                                        element._id,
+                                                    );
+                                                    element.empty = false;
+                                                }}>
+                                                {"Signaler Ok"}
+                                            </button>
+                                        ) : (
+                                            <button
+                                                type={"button"}
+                                                className={classes.buttonBis}
+                                                variant={"outlined"}
+                                                onClick={() => {
+                                                    props.updateEmpty(
+                                                        element._id,
+                                                    );
+                                                    element.empty = true;
+                                                }}>
+                                                {"Signaler vide"}
+                                            </button>
+                                        )}
+                                        {element.deleted_at === null ||
+                                        element.deleted_at === "" ? (
+                                            <button
+                                                type={"button"}
+                                                className={classes.buttonBis}
+                                                variant={"outlined"}
+                                                onClick={() => {
+                                                    props.updateDelete(
+                                                        element._id,
+                                                    );
+                                                    element.deleted_at =
+                                                        "To delete";
+                                                }}>
+                                                {"N'existe plus"}
+                                            </button>
+                                        ) : (
+                                            <p className={classes.spanWarning}>
+                                                <ErrorOutlineIcon
+                                                    className={
+                                                        classes.warningIcon
+                                                    }>
+                                                    {" "}
+                                                </ErrorOutlineIcon>
+                                                {"N'est plus disponible"}
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
                             </button>
                         </div>

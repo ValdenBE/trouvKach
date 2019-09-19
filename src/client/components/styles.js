@@ -14,31 +14,44 @@ const useStyles = makeStyles({
         marginBottom: "-0.8rem",
         justifyContent: "flex-start",
         textAlign: "left",
-
         color: "rgba(0, 0, 0, 0.87)",
-
         padding: "6px 16px",
-
         fontSize: "0.875rem",
-
         minWidth: "64px",
-
         boxSizing: "border-box",
-
         transition:
             "backgroundColor 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-
         fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-
         fontWeight: "500",
-
         lineHeight: "1.75",
-
         borderRadius: "4px",
-
         letterSpacing: "0.02857em",
-
         textTransform: "uppercase",
+        cursor: "pointer",
+    },
+    buttonBis: {
+        width: "auto",
+        height: "auto",
+        borderRight: "1rem solid #16324F !important",
+        border: "0.1rem solid #16324F",
+        background: "whitesmoke",
+        justifyContent: "flex-start",
+        textAlign: "left",
+        color: "rgba(0, 0, 0, 0.87)",
+        padding: "6px 16px",
+        fontSize: "0.875rem",
+        minWidth: "64px",
+        boxSizing: "border-box",
+        transition:
+            "backgroundColor 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+        fontWeight: "500",
+        lineHeight: "1.75",
+        borderRadius: "4px",
+        letterSpacing: "0.02857em",
+        textTransform: "uppercase",
+        marginBottom: "0.3rem",
+        cursor: "pointer",
     },
     btnTitle: {
         marginTop: "-0.5rem",
@@ -90,6 +103,7 @@ const useStyles = makeStyles({
     },
     subdivOpen: {
         display: "block",
+        cursor: "auto",
     },
     subdivClose: {
         display: "none",
@@ -101,6 +115,24 @@ const useStyles = makeStyles({
     },
     btnClose: {
         marginBottom: "0.5rem",
+    },
+    buttonWrapper: {
+        display: "flex",
+        flexDirection: "column",
+        width: "11rem",
+        alignItems: "center",
+        marginLeft: "23.7rem",
+        marginTop: "-6.4rem",
+    },
+    spanWarning: {
+        color: "red",
+        display: "flex",
+        fontStyle: "italic",
+        flexDirection: "row",
+    },
+    warningIcon: {
+        width: "3em !important",
+        height: "2em !important",
     },
 });
 export default useStyles;
