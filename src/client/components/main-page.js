@@ -36,7 +36,6 @@ const useStyles = makeStyles(theme => ({
     },
     card: {
         width: "100%",
-        height: "6rem",
         borderLeft: "1rem solid #16324F !important",
         border: "0.1rem solid #16324F",
         background: "whitesmoke",
@@ -92,7 +91,7 @@ const useStyles = makeStyles(theme => ({
 
 function MainList(props) {
     const [currentAtm, setAtm] = useState();
-    const [isClicked, setClicked] = useState();
+    const [isClicked, setClicked] = useState(); // State for the "deploying" button
     function getDistance(latAtm, longAtm) {
         const RAYON = 6378000;
         const radlat1 = (Math.PI * props.userLat) / 180;
@@ -158,8 +157,7 @@ function MainList(props) {
                                     element.position.coordinates[1],
                                     element.position.coordinates[0],
                                 ]);
-                                setClicked(element._id);
-                                console.log(isClicked === element._id);
+                                setClicked(element._id); // For deploying buttons.
                             }}>
                             <CardContent className={classes.cardContent}>
                                 <Typography className={classes.distance}>
@@ -179,16 +177,57 @@ function MainList(props) {
                                     variant={"body1"}>
                                     {element.address}
                                 </Typography>
+                                {/* Start of the inner content of buttons */}
                                 <div
                                     className={
                                         isClicked === element._id
                                             ? classes.subdivOpen
                                             : classes.subdivClose
                                     }>
-                                    {
-                                        "Ceci est mon contenu, il s'affiche au click"
-                                    }
+                                    <p>
+                                        {
+                                            "Ceci est mon contenu, il s'affiche au click"
+                                        }
+                                    </p>
+                                    {element.empty ? (
+                                        <Button
+                                            className={classes.button}
+                                            variant={"outlined"}
+                                            onClick={() => {
+                                                props.updateEmpty(element._id);
+                                                element.empty = false;
+                                            }}>
+                                            {"Signaler Ok"}
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            className={classes.button}
+                                            variant={"outlined"}
+                                            onClick={() => {
+                                                props.updateEmpty(element._id);
+                                                element.empty = true;
+                                            }}>
+                                            {"Signaler vide"}
+                                        </Button>
+                                    )}
+                                    {element.deleted_at === null ? (
+                                        <Button
+                                            className={classes.button}
+                                            variant={"outlined"}
+                                            onClick={() => {
+                                                props.updateDelete(element._id);
+                                                element.deleted_at =
+                                                    "To delete";
+                                            }}>
+                                            {"N'existe plus"}
+                                        </Button>
+                                    ) : (
+                                        <span>
+                                            {"  a été marqué comme supprimé"}
+                                        </span>
+                                    )}
                                 </div>
+                                {/* Stop of inner content button */}
                             </CardContent>
                         </Button>
                     );

@@ -67,6 +67,20 @@ export default class Trouvkach extends Component {
         });
     }
 
+    async updateEmpty(id) {
+        await axios
+            .post(`/api/empty/${id}`)
+            .then(res => console.log(res))
+            .catch(err => console.error(err));
+    }
+
+    async updateDelete(id) {
+        await axios
+            .post(`/api/delete/${id}`)
+            .then(res => console.log(res))
+            .catch(err => console.error(err));
+    }
+
     render() {
         if (
             this.state.loading &&
@@ -84,6 +98,8 @@ export default class Trouvkach extends Component {
                     userLat={this.state.userLat}
                     userLng={this.state.userLng}
                     bankArray={this.state.bankArray}
+                    updateEmpty={this.updateEmpty}
+                    updateDelete={this.updateDelete}
                 />
             </div>
         );
