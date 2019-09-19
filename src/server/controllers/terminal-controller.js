@@ -101,14 +101,17 @@ exports.updateEmpty = req => {
 
 exports.updateDelete = req => {
     const deleted = new Date();
-    console.log(
-        `deleted terminal ${req.params.id} at ${deleted.toISOString()}`,
-    );
     terminal
         .updateOne({_id: req.params.id}, {deleted_at: deleted.toISOString()})
         .exec(() => {
             console.log("Term deleted empty");
         });
+};
+
+exports.test = req => {
+    terminal.updateOne({_id: req.params.id}, {deleted_at: null}).exec(() => {
+        console.log("Term modified");
+    });
 };
 
 // Update lat. and long. to 1 position property

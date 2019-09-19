@@ -210,7 +210,8 @@ function MainList(props) {
                                             {"Signaler vide"}
                                         </Button>
                                     )}
-                                    {element.deleted_at === null ? (
+                                    {element.deleted_at === null ||
+                                    element.deleted_at === "" ? (
                                         <Button
                                             className={classes.button}
                                             variant={"outlined"}
