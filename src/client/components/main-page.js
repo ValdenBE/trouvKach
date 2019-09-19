@@ -1,96 +1,14 @@
-import React, {useState} from "react";
-import List from "@material-ui/core/List";
-import {makeStyles} from "@material-ui/core/styles";
-import MainMap from "./map/main-map";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import CardContent from "@material-ui/core/CardContent";
+import React from "react";
+import useStyles from "./styles";
+import Btnclose from "./btnclose";
+import Btnopen from "./btnopen";
 import "@babel/polyfill";
-//import Portal from "@material-ui/core/Portal";
-const drawerWidth = "24rem";
+import MainMap from "./map/main-map";
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: "flex",
-        fontSize: "2rem",
-    },
-    appBar: {
-        marginLeft: drawerWidth,
-        [theme.breakpoints.up("sm")]: {
-            width: `calc(100% - ${drawerWidth}px)`,
-        },
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.up("sm")]: {
-            display: "none",
-        },
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(4),
-        paddingTop: "8.rem",
-    },
-    buttonsList: {
-        width: "100%",
-        backgroundColor: "transparent",
-    },
-    card: {
-        width: "100%",
-        height: "6rem",
-        borderLeft: "1rem solid #16324F !important",
-        border: "0.1rem solid #16324F",
-        background: "whitesmoke",
-        marginBottom: "0.5rem",
-        justifyContent: "flex-start",
-        textAlign: "left",
-    },
-    addresslist: {
-        marginTop: "8rem",
-        paddingTop: "0 !important",
-        marginRight: "1rem",
-        marginLeft: "2rem",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-end",
-        width: "30%",
-        height: "51rem",
-        overflow: "auto",
-    },
-    cardContent: {
-        padding: "0 !important",
-        width: "100%",
-    },
-    btnTitle: {
-        fontSize: "1.7rem",
-        color: "#16324F",
-        fontFamily: "Roboto, sans-serif",
-        fontWeight: "bold",
-        fontStyle: "italic",
-    },
-    btnaddress: {
-        fontSize: "1.3rem",
-    },
-    ListDiv: {
-        display: "flex",
-        justifyContent: "space-between",
-    },
-    distance: {
-        fontSize: "1rem",
-        position: "absolute",
-        right: 0,
-        paddingRight: "0.5rem",
-        color: "gray",
-    },
-}));
-
-function MainList(props) {
-    const [show, setShow] = React.useState(false);
-    //const container = React.useRef(null);
-    function handleClick() {
-        setShow(!show);
-    }
-    const [currentAtm, setAtm] = useState();
+function mainPage(props) {
+    const [isClicked, setClicked] = React.useState();
+    const [currentAtm, setAtm] = React.useState();
+    const classes = useStyles();
     function getDistance(latAtm, longAtm) {
         const RAYON = 6378000;
         const radlat1 = (Math.PI * props.userLat) / 180;
@@ -109,19 +27,8 @@ function MainList(props) {
         return `${Math.floor(dist)} m`;
     }
 
-    // const [showAtmPopup, setShowAtmPopup] = useState(false);
-
-    // function showAtmPopUp() {
-    //     setShowAtmPopup(true);
-    // }
-
-    // function hideAtmPopup() {
-    //     setShowAtmPopup(false);
-    // }
-
-    const classes = useStyles();
     const drawer = (
-        <div className={classes.ListDiv}>
+        <div className={classes.mainContent}>
             <MainMap
                 className={classes.mainmap}
                 atmArray={props.atmArray}
@@ -130,7 +37,7 @@ function MainList(props) {
                 currentAtm={currentAtm}
                 bankArray={props.bankArray}
             />
-            <List className={classes.addresslist}>
+            <div className={classes.ListDiv}>
                 {/* mapping on Atm array */}
                 {props.atmArray.map(element => {
                     const matchingBank = props.bankArray.find(bank => {
@@ -147,45 +54,54 @@ function MainList(props) {
                     if (element.address === null) {
                         element.address = "Adresse inconnue";
                     }
+                    const close = (
+                        <Btnclose
+                            bankName={bankAtm}
+                            distance={getDistance(
+                                element.latitude,
+                                element.longitude,
+                            )}
+                            address={element.address}
+                        />
+                    );
+                    const open = (
+                        <Btnopen
+                            distance={getDistance(
+                                element.latitude,
+                                element.longitude,
+                            )}
+                            dataOne={element.updated_at}
+                        />
+                    );
                     return (
-                        <Button
-                            className={classes.card}
-                            key={element._id}
-                            coords={element.position}
-                            onClick={() => {
-                                setAtm([
-                                    element.position.coordinates[1],
-                                    element.position.coordinates[0],
-                                ]);
-                                handleClick();
-                            }}>
-                            <CardContent className={classes.cardContent}>
-                                <Typography className={classes.distance}>
-                                    {"Distance :"}{" "}
-                                    {getDistance(
-                                        element.latitude,
-                                        element.longitude,
-                                    )}
-                                </Typography>
-                                <Typography
-                                    variant={"h6"}
-                                    className={classes.btnTitle}>
-                                    {bankAtm}
-                                </Typography>
-                                <Typography
-                                    className={classes.btnaddress}
-                                    variant={"body1"}>
-                                    {element.address}
-                                </Typography>
-                            </CardContent>
-                        </Button>
+                        <div className={classes.content} key={element._id}>
+                            <button
+                                type={"button"}
+                                className={classes.button}
+                                onClick={() => {
+                                    setAtm([
+                                        element.position.coordinates[1],
+                                        element.position.coordinates[0],
+                                    ]);
+                                    setClicked(element._id);
+                                }}>
+                                {close}
+                                <div
+                                    className={
+                                        isClicked === element._id
+                                            ? classes.subdivOpen
+                                            : classes.subdivClose
+                                    }>
+                                    {open}
+                                </div>
+                            </button>
+                        </div>
                     );
                 })}
-            </List>
+            </div>
         </div>
     );
 
     return <div>{drawer}</div>;
 }
-
-export default MainList;
+export default mainPage;

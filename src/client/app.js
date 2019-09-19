@@ -39,10 +39,6 @@ export default class Trouvkach extends Component {
         }, this.error);
     }
 
-    error() {
-        console.log("oups");
-    }
-
     updateStateContent() {
         this.setState(prevState => ({
             viewContent: !prevState.viewContent,

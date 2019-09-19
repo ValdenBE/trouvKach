@@ -26,6 +26,11 @@ const useStyles = makeStyles(theme => ({
     },
     button: {
         backgroundColor: "#2A628F",
+        width: "12rem",
+        height: "4rem",
+        fontSize: "2rem",
+        fontWeight: "bold",
+        fontStyle: "italic",
     },
     title: {
         fontFamily: "Pacifico , cursive",
@@ -38,6 +43,7 @@ const useStyles = makeStyles(theme => ({
     },
     inputRoot: {
         color: "inherit",
+        fontSize: "30rem",
     },
 }));
 
