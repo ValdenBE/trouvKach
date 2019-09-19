@@ -9,21 +9,65 @@
 import * as React from "react";
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
 import L from "leaflet";
-import atmImg from "./img/atm.png";
 import TxtPop from "./txt-pop";
+
+import argenta from "./img/atms/argenta.png";
+import axa from "./img/atms/axa.png";
+import belfius from "./img/atms/belfius.png";
+import beobank from "./img/atms/beobank.png";
+import bepost from "./img/atms/bepost.png";
+import crelan from "./img/atms/crelan.png";
+import cbc from "./img/atms/cbc.png";
+import kbc from "./img/atms/kbc.png";
+import keytrade from "./img/atms/keytrade.png";
+import fortis from "./img/atms/fortis.png";
+import ing from "./img/atms/ing.png";
+import bkcp from "./img/atms/bkcp.png";
+import delta from "./img/atms/delta.png";
+import deutsche from "./img/atms/deutsche.png";
 
 export default class MaMap extends React.Component {
     constructor(props) {
         super(props);
-        this.atmIcon = L.icon({
-            iconUrl: atmImg,
-            iconSize: [38, 38],
-            iconAnchor: [22, 92],
-            popupAnchor: [-3, -76],
-        });
+        this.iconList = [
+            {id: "53937660e0b8c05979c6ea55", url: argenta},
+
+            {id: "53937660e0b8c05979c6ea56", url: axa},
+
+            {id: "53937660e0b8c05979c6ea57", url: belfius},
+
+            {id: "53937660e0b8c05979c6ea58", url: beobank},
+
+            {id: "53937660e0b8c05979c6ea59", url: bepost},
+
+            {id: "53937660e0b8c05979c6ea5a", url: crelan},
+
+            {id: "53937660e0b8c05979c6ea5b", url: cbc},
+
+            {id: "53937660e0b8c05979c6ea5c", url: kbc},
+
+            {id: "53937660e0b8c05979c6ea5d", url: keytrade},
+
+            {id: "53937660e0b8c05979c6ea5e", url: fortis},
+
+            {id: "53937660e0b8c05979c6ea5f", url: ing},
+
+            {id: "53937660e0b8c05979c6ea60", url: bkcp},
+
+            {id: "53937660e0b8c05979c6ea61", url: delta},
+
+            {id: "53937660e0b8c05979c6ea62", url: deutsche},
+        ];
         this.state = {
             mapCenter: [this.props.userLat, this.props.userLng],
+            atmImg: argenta,
         };
+        this.atmIcon = L.icon({
+            iconUrl: this.state.atmImg,
+            iconSize: [38, 38],
+            iconAnchor: [12, 92],
+            popupAnchor: [-3, -76],
+        });
     }
     // pour update state des props
     static getDerivedStateFromProps(props, state) {
@@ -68,6 +112,16 @@ export default class MaMap extends React.Component {
                         el.position.coordinates[1],
                         el.position.coordinates[0],
                     ];
+
+                    this.setState({
+                        atmImg: this.iconList.find(img => {
+                            if (el.bank === img.id) {
+                                return img.url;
+                            }
+                            return null;
+                        }),
+                    });
+
                     return (
                         <Marker
                             key={el._id}
