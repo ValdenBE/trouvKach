@@ -82,10 +82,17 @@ const useStyles = makeStyles(theme => ({
         paddingRight: "0.5rem",
         color: "gray",
     },
+    subdivOpen: {
+        display: "block",
+    },
+    subdivClose: {
+        display: "none",
+    },
 }));
 
 function MainList(props) {
     const [currentAtm, setAtm] = useState();
+    const [isClicked, setClicked] = useState();
     function getDistance(latAtm, longAtm) {
         const RAYON = 6378000;
         const radlat1 = (Math.PI * props.userLat) / 180;
@@ -146,13 +153,14 @@ function MainList(props) {
                         <Button
                             className={classes.card}
                             key={element._id}
-                            coords={element.position}
-                            onClick={() =>
+                            onClick={() => {
                                 setAtm([
                                     element.position.coordinates[1],
                                     element.position.coordinates[0],
-                                ])
-                            }>
+                                ]);
+                                setClicked(element._id);
+                                console.log(isClicked === element._id);
+                            }}>
                             <CardContent className={classes.cardContent}>
                                 <Typography className={classes.distance}>
                                     {"Distance :"}{" "}
@@ -171,6 +179,16 @@ function MainList(props) {
                                     variant={"body1"}>
                                     {element.address}
                                 </Typography>
+                                <div
+                                    className={
+                                        isClicked === element._id
+                                            ? classes.subdivOpen
+                                            : classes.subdivClose
+                                    }>
+                                    {
+                                        "Ceci est mon contenu, il s'affiche au click"
+                                    }
+                                </div>
                             </CardContent>
                         </Button>
                     );
