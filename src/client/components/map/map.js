@@ -10,6 +10,7 @@ import * as React from "react";
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
 import L from "leaflet";
 import TxtPop from "./txt-pop";
+import atmImg from "./img/atm.png";
 
 import argenta from "./img/atms/argenta.png";
 import axa from "./img/atms/axa.png";
@@ -60,10 +61,9 @@ export default class MaMap extends React.Component {
         ];
         this.state = {
             mapCenter: [this.props.userLat, this.props.userLng],
-            atmImg: argenta,
         };
         this.atmIcon = L.icon({
-            iconUrl: this.state.atmImg,
+            iconUrl: atmImg,
             iconSize: [38, 38],
             iconAnchor: [12, 92],
             popupAnchor: [-3, -76],
@@ -112,15 +112,6 @@ export default class MaMap extends React.Component {
                         el.position.coordinates[1],
                         el.position.coordinates[0],
                     ];
-
-                    this.setState({
-                        atmImg: this.iconList.find(img => {
-                            if (el.bank === img.id) {
-                                return img.url;
-                            }
-                            return null;
-                        }),
-                    });
 
                     return (
                         <Marker
