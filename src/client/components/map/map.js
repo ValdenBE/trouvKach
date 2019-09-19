@@ -61,6 +61,7 @@ export default class MaMap extends React.Component {
         ];
         this.state = {
             mapCenter: [this.props.userLat, this.props.userLng],
+            zoom: 15,
         };
         this.atmIcon = L.icon({
             iconUrl: atmImg,
@@ -68,6 +69,9 @@ export default class MaMap extends React.Component {
             iconAnchor: [12, 92],
             popupAnchor: [-3, -76],
         });
+        this.zoom18 = 18;
+        this.zoom15 = 15;
+        this.markerZoom = this.markerZoom.bind(this);
     }
     // pour update state des props
     static getDerivedStateFromProps(props, state) {
@@ -82,13 +86,23 @@ export default class MaMap extends React.Component {
         return null;
     }
 
+    markerZoom(zoom) {
+        if (zoom === 18) {
+            this.setState({zoom: 15});
+        }
+        this.setState({zoom: 18});
+    }
+
     render() {
         const styleMap = {
             height: "51.7rem",
         };
 
         return (
-            <Map center={this.state.mapCenter} zoom={16} style={styleMap}>
+            <Map
+                center={this.state.mapCenter}
+                zoom={this.state.zoom}
+                style={styleMap}>
                 <TileLayer
                     attribution={
                         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -119,6 +133,7 @@ export default class MaMap extends React.Component {
                             position={coords}
                             icon={this.atmIcon}
                             onClick={() => {
+                                this.markerZoom(this.state.zoom);
                                 this.setState({
                                     mapCenter: [
                                         el.position.coordinates[1],
