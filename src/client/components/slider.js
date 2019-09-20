@@ -46,7 +46,7 @@ export default function CustomizedSlider(props) {
             <div className={classes.margin} />
             <PrettoSlider
                 defaultValue={props.distance}
-                onChange={props.handleDistance}
+                onClick={props.handleDistance}
                 min={0}
                 max={3000}
                 step={10}
