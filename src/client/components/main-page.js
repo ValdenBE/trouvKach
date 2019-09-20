@@ -49,6 +49,7 @@ function mainPage(props) {
                         return null;
                     });
 
+                    /* retrieving bank names for list display */
                     const bankAtm = matchingBank
                         ? matchingBank.name
                         : "Banque inconnue";

@@ -16,17 +16,12 @@ const mapStyle = {
     border: "0.rem solid #16324F",
 };
 export default class MainMap extends React.Component {
-    constructor(props) {
-        super(props);
-        this.zoom = 16;
-    }
     render() {
         return (
             <div id={"mapContainer"} style={mapStyle}>
                 <MaMap
                     userLat={this.props.userLat}
                     userLng={this.props.userLng}
-                    zoom={this.zoom}
                     className={"leaflet-container"}
                     atmArray={this.props.atmArray}
                     currentAtm={this.props.currentAtm}
