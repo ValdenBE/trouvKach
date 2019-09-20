@@ -38,6 +38,7 @@ exports.getTerm = (req, res) => {
 exports.geoOrd = (req, res) => {
     const long = parseFloat(req.params.lng);
     const lat = parseFloat(req.params.lat);
+    const radius = parseInt(req.params.radius);
     terminal.aggregate(
         [
             {
@@ -47,14 +48,14 @@ exports.geoOrd = (req, res) => {
                         coordinates: [long, lat],
                     },
                     distanceField: "dist.calculated",
-                    maxDistance: 1000,
+                    maxDistance: radius,
                     spherical: true,
                 },
             },
         ],
         (err, data) => {
             if (err) {
-                throw err;
+                throw err.message;
             }
             return res.json(data);
         },
@@ -87,17 +88,31 @@ exports.geoLocTerm = (req, res) => {
 };
 
 exports.updateEmpty = req => {
-    terminal.updateOne({_id: req.params.id}, {empty: true}).exec(() => {
-        console.log("Term updated empty");
-    });
+    terminal
+        .findOne({_id: req.params.id})
+        .then(element => {
+            terminal
+                .updateOne({_id: req.params.id}, {empty: !element.empty})
+                .exec(() => {
+                    console.log("Term updated empty");
+                });
+        })
+        .catch(err => console.error(err));
 };
 
 exports.updateDelete = req => {
     const deleted = new Date();
-    terminal.updateOne(
-        {_id: req.params.id},
-        {deleted_at: deleted.toISOString()},
-    );
+    terminal
+        .updateOne({_id: req.params.id}, {deleted_at: deleted.toISOString()})
+        .exec(() => {
+            console.log("Term deleted empty");
+        });
+};
+
+exports.test = req => {
+    terminal.updateOne({_id: req.params.id}, {deleted_at: null}).exec(() => {
+        console.log("Term modified");
+    });
 };
 
 // Update lat. and long. to 1 position property

@@ -15,6 +15,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
+import Input from "@material-ui/core/Input";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -26,6 +27,11 @@ const useStyles = makeStyles(theme => ({
     },
     button: {
         backgroundColor: "#2A628F",
+        width: "12rem",
+        height: "4rem",
+        fontSize: "2rem",
+        fontWeight: "bold",
+        fontStyle: "italic",
     },
     title: {
         fontFamily: "Pacifico , cursive",
@@ -38,6 +44,7 @@ const useStyles = makeStyles(theme => ({
     },
     inputRoot: {
         color: "inherit",
+        fontSize: "30rem",
     },
 }));
 
@@ -72,7 +79,7 @@ const StyledMenuItem = withStyles(theme => ({
     },
 }))(MenuItem);
 
-export default function SearchAppBar() {
+export default function SearchAppBar(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -100,6 +107,14 @@ export default function SearchAppBar() {
                     <Typography className={classes.title} variant={"h6"} noWrap>
                         {"Trouvkach"}
                     </Typography>
+                    <Input
+                        type={"number"}
+                        min={"100"}
+                        max={"10000"}
+                        step={"100"}
+                        onChange={props.handleDistance}
+                        value={props.distance}
+                    />
                     <div>
                         <Button
                             className={classes.button}
