@@ -12,6 +12,7 @@ const PrettoSlider = withStyles({
     root: {
         height: 10,
         width: 250,
+        marginTop: "80px",
     },
     thumb: {
         height: 24,
@@ -38,20 +39,18 @@ const PrettoSlider = withStyles({
     },
 })(Slider);
 
-export default function CustomizedSlider(props) {
+export default function CustomizedSlider() {
     const classes = useStyles();
 
     return (
         <div>
-            <div className={classes.margin} />
             <PrettoSlider
-                value={props.distance}
-                onChange={props.handleDistance}
                 min={0}
-                max={2000}
+                max={1000}
                 step={10}
                 valueLabelDisplay={"auto"}
                 aria-label={"pretto slider"}
+                defaultValue={500}
             />
             <div className={classes.margin} />
         </div>

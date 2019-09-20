@@ -89,6 +89,7 @@ export default class Trouvkach extends Component {
         this.setState({
             radius: event.currentTarget.value,
         });
+        console.log(this.state.radius);
         this.getUserCoords();
     }
 
@@ -102,12 +103,10 @@ export default class Trouvkach extends Component {
         }
         return (
             <div>
-                <Header
-                    atmArray={this.state.atmArray}
+                <Header atmArray={this.state.atmArray} />
+                <MainPage
                     distance={this.state.radius}
                     handleDistance={this.updateDistance.bind(this)}
-                />
-                <MainPage
                     viewContentUpdate={this.updateStateContent.bind(this)}
                     atmArray={this.state.atmArray}
                     userLat={this.state.userLat}

@@ -5,7 +5,6 @@ import Btnopen from "./btnopen";
 import "@babel/polyfill";
 import MainMap from "./map/main-map";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
-//import Slider from "@material-ui/core/Slider";
 
 function mainPage(props) {
     const [isClicked, setClicked] = React.useState();
@@ -31,18 +30,6 @@ function mainPage(props) {
 
     const drawer = (
         <div className={classes.mainContent}>
-            {/* <Slider
-                distance={props.distance}
-                handleDistance={props.handleDistance}
-            /> */}
-            {/* <Slider
-                value={props.distance}
-                onInput={props.handleDistance}
-                min={0}
-                max={2000}
-                step={10}
-                valueLabelDisplay={"auto"}
-            /> */}
             <MainMap
                 className={classes.mainmap}
                 atmArray={props.atmArray}

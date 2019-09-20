@@ -15,7 +15,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
-import Input from "@material-ui/core/Input";
+import Slider from "./slider";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -79,7 +79,7 @@ const StyledMenuItem = withStyles(theme => ({
     },
 }))(MenuItem);
 
-export default function SearchAppBar(props) {
+export default function SearchAppBar(/* props */) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -107,14 +107,7 @@ export default function SearchAppBar(props) {
                     <Typography className={classes.title} variant={"h6"} noWrap>
                         {"Trouvkach"}
                     </Typography>
-                    <Input
-                        type={"number"}
-                        min={"100"}
-                        max={"10000"}
-                        step={"100"}
-                        onChange={props.handleDistance}
-                        value={props.distance}
-                    />
+                    <Slider />
                     <div>
                         <Button
                             className={classes.button}
