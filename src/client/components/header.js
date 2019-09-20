@@ -108,6 +108,10 @@ export default function SearchAppBar(props) {
                         {"Trouvkach"}
                     </Typography>
                     <Input
+                        type={"number"}
+                        min={"100"}
+                        max={"10000"}
+                        step={"100"}
                         onChange={props.handleDistance}
                         value={props.distance}
                     />
