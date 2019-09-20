@@ -38,6 +38,7 @@ exports.getTerm = (req, res) => {
 exports.geoOrd = (req, res) => {
     const long = parseFloat(req.params.lng);
     const lat = parseFloat(req.params.lat);
+    const radius = parseInt(req.params.radius);
     terminal.aggregate(
         [
             {
@@ -47,14 +48,14 @@ exports.geoOrd = (req, res) => {
                         coordinates: [long, lat],
                     },
                     distanceField: "dist.calculated",
-                    maxDistance: 1000,
+                    maxDistance: radius,
                     spherical: true,
                 },
             },
         ],
         (err, data) => {
             if (err) {
-                throw err;
+                throw err.message;
             }
             return res.json(data);
         },

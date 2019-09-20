@@ -13,6 +13,7 @@ import MainPage from "./components/main-page";
 import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "@babel/polyfill";
+
 export default class Trouvkach extends Component {
     constructor(props) {
         super(props);
@@ -24,6 +25,7 @@ export default class Trouvkach extends Component {
             loading: true,
             userLat: null,
             userLng: null,
+            radius: 1000,
         };
         this.getUserCoords();
     }
@@ -51,7 +53,9 @@ export default class Trouvkach extends Component {
 
     async getAtm() {
         await axios
-            .get(`/api/terminal/${this.state.userLat}/${this.state.userLng}`)
+            .get(
+                `/api/terminal/${this.state.userLat}/${this.state.userLng}/${this.state.radius}`,
+            )
             .then(response => {
                 this.setState(() => ({
                     atmArray: response.data.map(atm => atm),
@@ -81,6 +85,13 @@ export default class Trouvkach extends Component {
             .catch(err => console.error(err));
     }
 
+    updateDistance(event) {
+        this.setState({
+            radius: event.currentTarget.value,
+        });
+        this.getUserCoords();
+    }
+
     render() {
         if (
             this.state.loading &&
@@ -91,7 +102,11 @@ export default class Trouvkach extends Component {
         }
         return (
             <div>
-                <Header atmArray={this.state.atmArray} />
+                <Header
+                    atmArray={this.state.atmArray}
+                    distance={this.state.radius}
+                    handleDistance={this.updateDistance.bind(this)}
+                />
                 <MainPage
                     viewContentUpdate={this.updateStateContent.bind(this)}
                     atmArray={this.state.atmArray}
