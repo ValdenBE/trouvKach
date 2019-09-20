@@ -45,10 +45,10 @@ export default function CustomizedSlider(props) {
         <div>
             <div className={classes.margin} />
             <PrettoSlider
-                value={props.distance}
+                defaultValue={props.distance}
                 onChange={props.handleDistance}
                 min={0}
-                max={2000}
+                max={3000}
                 step={10}
                 valueLabelDisplay={"auto"}
                 aria-label={"pretto slider"}

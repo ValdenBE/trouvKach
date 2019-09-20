@@ -74,7 +74,7 @@ exports.geoLocTerm = (req, res) => {
         .within({
             box: [[minLat, minLng], [maxLat, maxLng]],
         })
-        .limit(15)
+        .limit(10)
         .then(terminals => {
             res.json(terminals);
         })
