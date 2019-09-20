@@ -39,12 +39,14 @@ const PrettoSlider = withStyles({
     },
 })(Slider);
 
-export default function CustomizedSlider() {
+export default function CustomizedSlider(props) {
     const classes = useStyles();
 
     return (
         <div>
             <PrettoSlider
+                onChange={props.handleDistance}
+                value={props.distance}
                 min={0}
                 max={1000}
                 step={10}

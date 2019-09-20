@@ -15,7 +15,6 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
-import Slider from "./slider";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,6 +31,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: "2rem",
         fontWeight: "bold",
         fontStyle: "italic",
+        paddingTop: " 0.2rem",
     },
     title: {
         fontFamily: "Pacifico , cursive",
@@ -79,7 +79,7 @@ const StyledMenuItem = withStyles(theme => ({
     },
 }))(MenuItem);
 
-export default function SearchAppBar(/* props */) {
+export default function SearchAppBar() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -107,7 +107,10 @@ export default function SearchAppBar(/* props */) {
                     <Typography className={classes.title} variant={"h6"} noWrap>
                         {"Trouvkach"}
                     </Typography>
-                    <Slider />
+                    {/* <Slider
+                        handleDistance={props.handleDistance}
+                        distance={props.distance}
+                    /> */}
                     <div>
                         <Button
                             className={classes.button}
