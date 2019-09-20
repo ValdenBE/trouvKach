@@ -86,8 +86,9 @@ export default class Trouvkach extends Component {
     }
 
     updateDistance(event) {
+        console.log(event.currentTarget.innerText);
         this.setState({
-            radius: event.currentTarget.innerText,
+            radius: parseInt(event.currentTarget.innerText),
         });
         this.getUserCoords();
     }
@@ -105,7 +106,7 @@ export default class Trouvkach extends Component {
                 <Header
                     atmArray={this.state.atmArray}
                     distance={this.state.radius}
-                    handleDistance={this.updateDistance.bind(this)}
+                    updateDistance={this.updateDistance.bind(this)}
                 />
                 <MainPage
                     viewContentUpdate={this.updateStateContent.bind(this)}

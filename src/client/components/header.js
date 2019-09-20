@@ -15,6 +15,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
+import Slider from "./slider";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -45,6 +46,12 @@ const useStyles = makeStyles(theme => ({
     inputRoot: {
         color: "inherit",
         fontSize: "30rem",
+    },
+    sliderTooltip: {
+        fontSize: "2rem",
+        marginBottom: "-0.6rem",
+        fontStyle: "italic",
+        fontFamily: "cursive",
     },
 }));
 
@@ -79,7 +86,7 @@ const StyledMenuItem = withStyles(theme => ({
     },
 }))(MenuItem);
 
-export default function SearchAppBar() {
+export default function SearchAppBar(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -107,10 +114,12 @@ export default function SearchAppBar() {
                     <Typography className={classes.title} variant={"h6"} noWrap>
                         {"Trouvkach"}
                     </Typography>
-                    {/* <Slider
-                        handleDistance={props.handleDistance}
+                    <p className={classes.sliderTooltip}>{"Distance :"}</p>
+                    <Slider
+                        className={classes.slider}
+                        handleDistance={props.updateDistance}
                         distance={props.distance}
-                    /> */}
+                    />
                     <div>
                         <Button
                             className={classes.button}
